@@ -1,0 +1,68 @@
+body {
+    margin: 0;
+}
+
+header {
+    height: 55px;
+    line-height: 55px;
+    /* This ensures text is vertically aligned */
+    text-align: center;
+    background: cornflowerblue;
+
+    color: white;
+    font-family: 'Source Sans 3';
+    font-weight: bold;
+    font-size: 22px;
+}
+
+header span {
+    display: block;
+    height: 45px;
+    width: 45px;
+    position: fixed;
+    top: 5px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.8);
+	
+	color: black;
+	line-height: 45px;
+}
+
+header span i, header span {
+	/* vertical-align: middle; */
+	line-height: 45px;
+	height: 45px;
+	display: inline-block;
+}
+
+header span i {
+	padding-top: 10px;
+}
+
+header span.left {
+    left: 5px;
+}
+
+header span.right {
+    right: 5px;
+}
+
+section {
+	display: block;
+    width: 50%;
+    height: 100%;
+    position: fixed;
+	top: 55px;
+	bottom: 0;
+	overflow: scroll;
+}
+
+section.left {
+    background: rgba(196, 196, 196, 0.75);
+	left: 0;
+}
+
+section.right {
+    background: rgba(177, 178, 181, 0.75);
+	right: 0;
+}
