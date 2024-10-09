@@ -1,0 +1,113 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+    color: white;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #111;
+    padding: 15px;
+    color: white;
+}
+
+.nav-buttons button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.nav-buttons .active {
+    font-weight: bold;
+    border-bottom: 2px solid white;
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+}
+
+aside {
+    background-color: #f0f0f0;
+    width: 250px;
+    padding: 20px;
+    color: black;
+}
+
+.profile img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: block;
+    margin-bottom: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav a {
+    text-decoration: none;
+    display: block;
+    margin: 10px 0;
+    color: black;
+}
+
+nav .active {
+    color: purple;
+}
+
+.signout {
+    display: block;
+    margin-top: 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    background-color: #eee;
+    color: black;
+}
+
+.schedule select {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+.playlist table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    color: black;
+}
+
+.playlist th,
+.playlist td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.playlist button {
+    padding: 5px 10px;
+    cursor: pointer;
+}
