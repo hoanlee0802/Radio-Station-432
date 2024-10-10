@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    /* Global Default Font */
+    font-family: 'Source Sans 3';
+}
+
+header {
+    height: 55px;
+    /* This ensures text is vertically aligned */
+    line-height: 55px;
+
+    text-align: center;
+    background: cornflowerblue;
+
+    color: white;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+header span {
+    display: block;
+    height: 45px;
+    line-height: 45px;
+
+    width: 45px;
+    position: fixed;
+    top: 5px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.8);
+
+    color: black;
+    line-height: 45px;
+}
+
+header span i {
+    padding-top: 10px;
+    /* vertical-align: middle; /*doesn't working here*/ */
+}
+
+header span.left {
+    left: 5px;
+}
+
+header span.right {
+    right: 5px;
+}
+
+section {
+    display: block;
+    width: 50%;
+    height: 100%;
+    position: fixed;
+    top: 55px;
+    bottom: 0;
+    overflow: scroll;
+}
+
+section.left {
+    background: rgba(196, 196, 196, 0.75);
+    left: 0;
+}
+
+section.right {
+    background: rgba(177, 178, 181, 0.75);
+    right: 0;
+}
+
+
+section .song {
+    height: 40px;
+    line-height: 40px;
+	
+    margin: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+}
+
+section .song i {
+	/* Ensure the icon is aligned vertically */
+    vertical-align: middle;
+	padding: 0 5px;
+}
