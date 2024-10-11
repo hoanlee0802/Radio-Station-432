@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Manager Dashboard</title>
     <link rel="stylesheet" href="manager.css" />
+    <!-- Internal styling with FLexbox -->
     <style>
       .core-table,
       .core-form {
@@ -61,12 +62,15 @@
       </div>
       <div class="form-section">
         <h2>Assign DJ to Timeslot</h2>
+        <!-- Form -->
         <form class="core-form" action="#" method="post">
           <label for="date">Select Date:</label>
           <input type="date" id="date" name="date" required />
+          <!-- Validation - Required Field-->
 
           <label for="timeslot">Select Timeslot:</label>
           <select id="timeslot" name="timeslot" required>
+            <!-- Validation - Required Field-->
             <option value="morning">Morning (9AM-12PM)</option>
             <option value="afternoon">Afternoon (12PM-3PM)</option>
             <option value="evening">Evening (3PM-6PM)</option>
@@ -80,6 +84,7 @@
             placeholder="Enter DJ Name"
             required
           />
+          <!-- Validation - Required Field-->
 
           <input type="submit" value="Assign DJ" />
         </form>
