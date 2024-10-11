@@ -4,7 +4,8 @@ body {
     font-family: 'Source Sans 3';
 }
 
-ul { /* Default unordered list styling set to none */
+ul {
+    /* Default unordered list styling set to none */
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -40,7 +41,7 @@ header span {
 
 header span i {
     padding-top: 10px;
-    /* vertical-align: middle; /*doesn't working here*/ */
+    /* vertical-align: middle; /*doesn't working here*/
 }
 
 header span.left {
@@ -52,13 +53,12 @@ header span.right {
 }
 
 section {
-    display: block;
-    width: 50%;
-    height: 100%;
     position: fixed;
     top: 55px;
     bottom: 0;
-    overflow: scroll;
+
+    width: 50%;
+    overflow-y: scroll;
 }
 
 section.left {
@@ -75,16 +75,16 @@ section.right {
 section .song {
     height: 40px;
     line-height: 40px;
-	
+
     margin: 10px;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
 }
 
 section .song i {
-	/* Ensure the icon is aligned vertically */
+    /* Ensure the icon is aligned vertically */
     vertical-align: middle;
-	padding: 0 5px;
+    padding: 0 5px;
 }
 
 .song i.right {

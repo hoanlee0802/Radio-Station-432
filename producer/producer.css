@@ -1,0 +1,50 @@
+table {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 50%;
+    overflow-x: scroll;
+    background-color: #f2f2f2;
+    width: 50%;
+	opacity: 0.5;
+}
+
+table tr {
+    overflow-x: scroll;
+}
+
+table td {
+    text-align: center;
+    padding: 10px;
+}
+
+table td.separate {
+    padding: 0;
+}
+
+table .Days td.separate {
+    border-right: 1px dashed black;
+}
+
+.right aside {
+    position: absolute;
+    /* Will be positioned relative to section container */
+    top: 0;
+    bottom: 55px;
+    left: 0;
+    right: 0;
+    padding: 0 20px;
+
+}
+
+.right aside .playlist-info {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    line-height: 40px;
+    margin-top: -20px;
+    text-align: center;
+	opacity: 40%;
+	font-size: 20px;
+}
