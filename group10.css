@@ -4,6 +4,12 @@ body {
     font-family: 'Source Sans 3';
 }
 
+ul { /* Default unordered list styling set to none */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
 header {
     height: 55px;
     /* This ensures text is vertically aligned */
