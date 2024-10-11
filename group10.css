@@ -11,6 +11,15 @@ ul {
     padding: 0;
 }
 
+form * {
+    appearance: none;
+    /*This overrides the default way form elements look*/
+}
+
+fieldset {
+    border: none;
+}
+
 header {
     height: 55px;
     /* This ensures text is vertically aligned */
@@ -62,7 +71,7 @@ section {
 }
 
 section.left {
-    background: rgba(196, 196, 196, 0.75);
+    background: rgb(205, 205, 205);
     left: 0;
 }
 
