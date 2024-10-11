@@ -80,3 +80,9 @@ section .song i {
     vertical-align: middle;
 	padding: 0 5px;
 }
+
+.song i.right {
+    float: right;
+    line-height: 40px;
+    height: 40px;
+}
