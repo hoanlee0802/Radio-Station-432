@@ -38,7 +38,7 @@
 			<form>
 				<h3>SONG DATABASE</h3>
 				<select class="sort">
-					<option>Sort By</option>
+					<option value="">Sort By</option>
 					<option>Name</option>
 					<option>Length</option>
 					<option>Creation Date</option>
@@ -160,6 +160,26 @@
 			
 		</section>
 		<section class="right">
+			<form>
+				<h3>YOUR PLAYLISTS</h3>
+				<select class="sort" required>
+					<option value="">Select Playlist</option>
+					<option>Top 40</option>
+					<option>Ambient Light Rock</option>
+					<option>Top Picks</option>
+					<option>--+ Create New +--</option>
+				</select>
+				<fieldset>
+					<input type="text" placeholder="Search">
+					<select class="genre">
+						<option>Genre</option>
+						<option>Ambient</option>
+						<option>Soft Rock</option>
+						<option>Classic Rock</option>
+						<option>Mixed</option>
+					</select>
+				</fieldset>
+			</form>
 			<aside>
 				<span class="playlist-info">
 					Add Songs to Auto-Create a Playlist 
