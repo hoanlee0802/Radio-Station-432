@@ -20,6 +20,18 @@ fieldset {
     border: none;
 }
 
+
+.role-buttons button {
+    height: 40px;
+    width: 200px;
+    border-radius: 10px;
+    border: none;
+    margin: 15px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+
 header {
     height: 55px;
     /* This ensures text is vertically aligned */
