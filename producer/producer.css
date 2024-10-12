@@ -76,6 +76,20 @@ form select.genre {
 
 
 
+section.left .requests {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 50%;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 15px 15px 0 0;
+	background-color: white;
+	text-align: center;
+	box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+
 
 table {
     position: fixed;
