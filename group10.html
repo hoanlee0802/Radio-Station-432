@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Station - DJ</title>
+    <link rel="stylesheet" href="dj/css/dj.css">
+
+    <!-- CSS IMPORTS -->
+    <link rel="stylesheet" href="group10.css" type="text/css">
+
+    <!-- FONT IMPORTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
+        rel="stylesheet">
+
+    <!-- Google Material ICONS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>RADIO STATION</h1>
+            <nav class="nav-buttons">
+                <button>Manager</button>
+                <button>Producer</button>
+                <button>DJ</button>
+            </nav>
+        </header>
+
+        <div class="main-content">
+            <aside>
+                <div class="profile">
+                    <img src="profile-pic.png" alt="Profile Picture">
+                    <p>User1</p>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Feature 1</a></li>
+                        <li><a href="#">Feature 2</a></li>
+                        <li><a href="#">Feature 3</a></li>
+                    </ul>
+                </nav>
+                <button class="signout">Sign out</button>
+            </aside>
+
+            <main>
+                <h2>Select the roles:</h2>
+                <div class="role-buttons">
+                    <button onclick="window.location.href='manager/manager.html'">Manager</button>
+                    <button onclick="window.location.href='producer/producer.html'">Producer</button>
+                    <button onclick="window.location.href='dj/AssignedPlaylist.html'">DJ</button>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>

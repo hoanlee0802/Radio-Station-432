@@ -1,0 +1,115 @@
+body {
+    margin: 0;
+    /* Global Default Font */
+    font-family: 'Source Sans 3';
+}
+
+ul {
+    /* Default unordered list styling set to none */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+form * {
+    appearance: none;
+    /*This overrides the default way form elements look*/
+}
+
+fieldset {
+    border: none;
+}
+
+
+.role-buttons button {
+    height: 40px;
+    width: 200px;
+    border-radius: 10px;
+    border: none;
+    margin: 15px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+
+header {
+    height: 55px;
+    /* This ensures text is vertically aligned */
+    line-height: 55px;
+
+    text-align: center;
+    background: cornflowerblue;
+
+    color: white;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+header span {
+    display: block;
+    height: 45px;
+    line-height: 45px;
+
+    width: 45px;
+    position: fixed;
+    top: 5px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.8);
+
+    color: black;
+    line-height: 45px;
+}
+
+header span i {
+    padding-top: 10px;
+    /* vertical-align: middle; /*doesn't working here*/
+}
+
+header span.left {
+    left: 5px;
+}
+
+header span.right {
+    right: 5px;
+}
+
+section {
+    position: fixed;
+    top: 55px;
+    bottom: 0;
+
+    width: 50%;
+    overflow-y: scroll;
+}
+
+section.left {
+    background: rgb(205, 205, 205);
+    left: 0;
+}
+
+section.right {
+    background: rgba(177, 178, 181, 0.75);
+    right: 0;
+}
+
+
+section .song {
+    height: 40px;
+    line-height: 40px;
+
+    margin: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+}
+
+section .song i {
+    /* Ensure the icon is aligned vertically */
+    vertical-align: middle;
+    padding: 0 5px;
+}
+
+.song i.right {
+    float: right;
+    line-height: 40px;
+    height: 40px;
+}

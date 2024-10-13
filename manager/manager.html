@@ -1,0 +1,94 @@
+<!-- Doctype -->
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Head -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manager Dashboard</title>
+    <link rel="stylesheet" href="manager.css" />
+    <!-- Internal styling with FLexbox -->
+    <style>
+      .core-table,
+      .core-form {
+        margin: 20px;
+      }
+      .dashboard {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+      }
+    </style>
+  </head>
+  <!-- Body -->
+  <body>
+    <header>
+      <h1>Manager Dashboard</h1>
+    </header>
+
+    <section class="dashboard">
+      <div class="analytics-section">
+        <h2>DJ Performance Analytics</h2>
+        <!-- List -->
+        <ul>
+          <li>Percentage of producer-selected songs played: 80%</li>
+          <li>Most played song from the playlist: "Song A"</li>
+          <li>Days without DJ mixing: 2 days</li>
+          <li>Days with highest listeners: 10/10/2024</li>
+        </ul>
+
+        <!-- Table -->
+        <table class="core-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Producer Playlist</th>
+              <th>DJ Played Songs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>10/08/2024</td>
+              <td>Playlist 1</td>
+              <td>80%</td>
+            </tr>
+            <tr>
+              <td>10/09/2024</td>
+              <td>Playlist 2</td>
+              <td>90%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="form-section">
+        <h2>Assign DJ to Timeslot</h2>
+        <!-- Form -->
+        <form class="core-form" action="#" method="post">
+          <label for="date">Select Date:</label>
+          <input type="date" id="date" name="date" required />
+          <!-- Validation - Required Field-->
+
+          <label for="timeslot">Select Timeslot:</label>
+          <select id="timeslot" name="timeslot" required>
+            <!-- Validation - Required Field-->
+            <option value="morning">Morning (9AM-12PM)</option>
+            <option value="afternoon">Afternoon (12PM-3PM)</option>
+            <option value="evening">Evening (3PM-6PM)</option>
+          </select>
+
+          <label for="dj">Assign DJ:</label>
+          <input
+            type="text"
+            id="dj"
+            name="dj"
+            placeholder="Enter DJ Name"
+            required
+          />
+          <!-- Validation - Required Field-->
+
+          <input type="submit" value="Assign DJ" />
+        </form>
+      </div>
+    </section>
+  </body>
+</html>
