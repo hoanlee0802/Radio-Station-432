@@ -20,6 +20,52 @@ fieldset {
     border: none;
 }
 
+* {
+    box-sizing: border-box;
+}
+
+/* Side Nav Bar */
+aside#sidebar {
+    background-color: #f0f0f0;
+    width: 250px;
+    padding: 20px;
+    color: black;
+    top: 55px; /* Height of Header */
+    bottom: 0;
+}
+
+.profile img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    display: block;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+nav a {
+    text-decoration: none;
+    display: block;
+    margin: 10px 0;
+    color: black;
+}
+
+nav .active {
+    color: purple;
+}
+
+.signout {
+    display: block;
+    margin-top: 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* other */
+
 
 .role-buttons button {
     height: 40px;

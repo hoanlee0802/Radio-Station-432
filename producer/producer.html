@@ -4,9 +4,10 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>Producer View</title>
 
-	<link rel="stylesheet" href="producer.css">
+	<link rel="stylesheet" href="./css/producer.css">
+	<link rel="stylesheet" href="./css/interactive.css">
 
 	<!-- SHARED STYLE IMPORT: -->
 	<link rel="stylesheet" href="../group10.css" type="text/css">
@@ -34,19 +35,34 @@
 			flex-grow: 1; /* The items take up even space */
 		}
 	</style>
+	<script src="./js/producer.js"></script>
 </head>
 <body>
 	<header>
-		<a href="../group10.html">
-			<span class="left">
+		<!-- <a href="../group10.html"> -->
+			<span class="left" onclick="showSidebar()">
 				<i class="material-icons">person</i>
 			</span>
-		</a>
+		<!-- </a> -->
 		PRODUCER
 		<span class="right">
 			<i class="material-symbols-outlined">info_i</i>
 		</span>
 	</header>
+	<aside id="sidebar">
+		<div class="profile" onclick="window.location = '../group10.html'">
+			<img src="../profile-pic.png" alt="Profile Picture">
+			<p>User1</p>
+		</div>
+		<nav>
+			<ul>
+				<li><a href="#">Feature 1</a></li>
+				<li><a href="#">Feature 2</a></li>
+				<li><a href="#">Feature 3</a></li>
+			</ul>
+		</nav>
+		<button class="signout" onclick="window.location.href = '../group10.html'">Sign out</button>
+	</aside>
 	<main>
 		<section class="left">
 			<form>
@@ -70,102 +86,102 @@
 				</fieldset>
 			</form>
 			<ul>
-				<li class="song">
-					<i class="material-symbols-outlined">play_arrow</i>
+				<li class="song" data-id="1">
+					<i class="material-symbols-outlined thin-outline">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="2">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist Remix
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="3">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="4">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="5">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="6">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="7">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist Mashup
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="8">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="9">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="10">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="11">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="12">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="13">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="14">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="15">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="16">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist Remix
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="17">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="18">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="19">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
 				</li>
-				<li class="song">
+				<li class="song" data-id="20">
 					<i class="material-symbols-outlined">play_arrow</i>
 					"Super Awesome Song" by Very Famous Artist
 					<i class="material-symbols-outlined right">add_circle</i>
@@ -205,7 +221,9 @@
 					Add Songs to Auto-Create a Playlist 
 				</span>
 			</aside>
-		
+			<ul>
+
+			</ul>
 			<table>
 				<tr class="Dates">
 					<td>10/14</td>
