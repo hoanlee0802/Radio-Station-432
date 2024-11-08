@@ -43,3 +43,14 @@ aside#sidebar {
 header span {
     cursor: pointer;
 }
+
+
+
+select:disabled {
+    color: black;
+    opacity: 0.5;
+}
+
+form:invalid button {
+    background-color: slategrey
+}

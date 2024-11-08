@@ -8,6 +8,7 @@
 
 	<link rel="stylesheet" href="./css/producer.css">
 	<link rel="stylesheet" href="./css/interactive.css">
+	<link rel="stylesheet" href="./css/select-dj.css">
 
 	<!-- SHARED STYLE IMPORT: -->
 	<link rel="stylesheet" href="../group10.css" type="text/css">
@@ -35,7 +36,13 @@
 			flex-grow: 1; /* The items take up even space */
 		}
 	</style>
+	
+
 	<script src="./js/producer.js"></script>
+	<script src="./js/select-dj.js"></script>
+
+	<script src="./js/playlist-data.js" type="module"></script>
+	<script src="./js/playlist-events.js" type="module"></script>
 </head>
 <body>
 	<header>
@@ -46,9 +53,32 @@
 		<!-- </a> -->
 		PRODUCER
 		<span class="right">
-			<i class="material-symbols-outlined">info_i</i>
+			<i class="material-symbols-outlined">album</i>
 		</span>
 	</header>
+	<div id="selectDJ">
+		<form>
+			<h3>Assigned Playlists</h3>
+			<select class="dj large" required>
+				<option value="">Select DJ</option>
+				<option>Mark Cruz</option>
+				<option>Anthony Diaz</option>
+				<option>Jackson Smith</option>
+				<option>Samantha L.</option>
+			</select>
+
+			
+			<select class="timeslot large" disabled required>
+				<option value="">Assigned Timeslot</option>
+				<option>Morning (9AM-12PM)</option>
+				<option>Afternoon (12PM-3PM)</option>
+				<option>Evening (3PM-6PM)</option>
+			</select>
+
+			<button type="submit">Edit Playlists</button>
+		</form>
+		
+	</div>
 	<aside id="sidebar">
 		<div class="profile" onclick="window.location = '../group10.html'">
 			<img src="../profile-pic.png" alt="Profile Picture">
@@ -67,7 +97,7 @@
 		<section class="left">
 			<form>
 				<h3>SONG DATABASE</h3>
-				<select class="sort">
+				<select class="large">
 					<option value="">Sort By</option>
 					<option>Name</option>
 					<option>Length</option>
@@ -198,12 +228,12 @@
 		<section class="right">
 			<form>
 				<h3>YOUR PLAYLISTS</h3>
-				<select class="sort" required>
+				<select class="playlist large" required>
 					<option value="">Select Playlist</option>
 					<option>Top 40</option>
 					<option>Ambient Light Rock</option>
 					<option>Top Picks</option>
-					<option>--+ Create New +--</option>
+					<option value="create">--+ Create New +--</option>
 				</select>
 				<fieldset>
 					<input type="text" placeholder="Search">
