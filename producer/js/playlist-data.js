@@ -1,14 +1,18 @@
-const currDJ = {
+// recall that const lets you change object properties just not the object reference
+const currDJ = { // Object maintains a temporary state of DJ data currently being edited
 	name: undefined,
 
 	currPlaylist: undefined,
 	playlist: {
 		names: [],
-		data: [
-			// playlistName: [ {id: 1, songName: 'mySong'} ]
-		]
+		data: {
+			// Example of how the data will look:
+			// "playlistName": [ 
+			// 		{id: 1, name: 'mySong1'},
+			// 		{id: 2, name: 'mySong2'}
+			// ]
+		}
 	}
-
 }
 
 const set = function setLocal(item, value) {
@@ -27,19 +31,20 @@ function createPlaylist(name, data) {
 		let checked = `Playlist ${num}`;
 		while (playlist.names.includes(checked)) {
 			num++;
-			check = `Playlist ${num}`;
+			checked = `Playlist ${num}`;
 		}
 		name = checked; // name is now verified
 	} else {
-		if (playlist.names.includes(name)) {
-			let newName = prompt("Name already used");
+		if (playlist.names.includes(name) || name.trim() == '') {
+			let newName = prompt(`Name already used/invalid.`).trim();
 			while (newName) {
-				if (playlist.names.includes(newName)) {
-					newName = prompt("Still a used name");
-				}
-				// Loop will exit automatically
+				if (playlist.names.includes(newName) || newName.trim() == '')
+					newName = prompt(`"${newName}" is still a used/invalid name`).trim();
+				else
+					break;
 			}
-			if (!newName)
+			console.log('exited loop');
+			if (!newName.trim())
 				return false; // PlayList Creation Aborted
 			name = newName; // othewise name is newName
 		}
@@ -48,17 +53,22 @@ function createPlaylist(name, data) {
 	playlist.data[name] = [];
 
 	currDJ.currPlaylist = name; // global object will indicate the current playlist
+	currDJ.playlist.data[name] = [];
 	
 	return true; // success
 }
 
-function addSong(id, name) {
-	if (currPlaylist != undefined) {
-		playlist.data[currPlaylist].push({
+function appendSong(id, name) {
+	if (currDJ.currPlaylist != undefined) {
+		currDJ.playlist.data[currDJ.currPlaylist].push({
 			id: id, 
 			name: name
 		});
 	}
 }
 
-export {currDJ, createPlaylist, addSong};
+function loadSongs() {
+	return currDJ.playlist.data[currDJ.currPlaylist];
+}
+
+export {currDJ, createPlaylist, appendSong, loadSongs};

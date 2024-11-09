@@ -1,3 +1,7 @@
+import * as dj from './playlist-data.js';
+import * as profiles from './user-profile.js';
+import { DJProfile } from './user-profile.js';
+
 function $(selector) {
 	return document.querySelector(selector);
 }
@@ -5,6 +9,29 @@ function $(selector) {
 function listDJs() {
 	$('#selectDJ').classList.toggle('hide');
 }
+
+
+function getSessionData(name) {
+	const find = profiles.all.find(obj => obj.name == name);
+	if (find) {
+		dj.currDJ.currPlaylist = filter.getOnPlaylist();
+		dj.currDJ.playlist = filter.getPlaylists();
+	} else {
+		const profile = new DJProfile(name, {}, undefined);
+		profiles.all.push(profile);
+	}
+
+	dj.currDJ.name = name;
+}
+
+function setSessionData(name) {
+	const find = profiles.all.find(obj => obj.name == name);
+	if (find) {
+		filter.setOnPlaylist(dj.currDJ.currPlaylist);
+		filter.setPlaylists(dj.currDJ.playlist);
+	}
+}
+
 
 document.addEventListener('DOMContentLoaded', function() {
 	const confirmBtn = $('#selectDJ form');
@@ -22,13 +49,17 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 	})
 
+
 	confirmBtn.addEventListener('submit', function(e) {
 		e.preventDefault();
+		getSessionData(selectDJ.options[selectDJ.selectedIndex].text);
+
 		listDJs(); // this will hide the DJ list
 	});
 	
 	listDJ.addEventListener('click', function() {
 		listDJs();
 	})
-
 })
+
+export {setSessionData}
