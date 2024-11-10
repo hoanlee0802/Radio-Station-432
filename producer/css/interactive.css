@@ -1,0 +1,56 @@
+/* Includes styles for elements when they are interacted with */
+
+* {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.song {
+    cursor: default;
+}
+
+.song.added {
+	opacity: 0.5;
+	transition: all 0.15s ease;
+}
+
+.song.added:hover {
+	opacity: 1;
+    background-color: rgba(255,255,255,0.4);
+}
+
+.song i {
+    cursor: pointer;
+}
+
+
+/* The sidebar with profile and switching roles */
+/* The sidebar is hidden by default */
+aside#sidebar {
+    position: fixed;
+    z-index: 10;
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.25);
+    left: -250px;
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+#sidebar.show {
+    left: 0;
+    opacity: 1;
+}
+
+header span {
+    cursor: pointer;
+}
+
+
+
+select:disabled {
+    color: black;
+    opacity: 0.5;
+}
+
+form:invalid button {
+    background-color: slategrey
+}

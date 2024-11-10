@@ -1,0 +1,159 @@
+ul li {
+    overflow: hidden;
+}
+
+
+
+form {
+    position: sticky;
+    top: 0;
+    background-color: rgb(205, 205, 205);
+    z-index: 10;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+form *:focus {
+    outline: none;
+}
+
+form fieldset {
+    padding: 0;
+    position: relative;
+}
+
+form h3 {
+    text-align: center;
+    margin: 0;
+    padding-top: 15px;
+}
+
+
+form select {
+    font-size: 13px;
+    text-align: center;
+    width: 250px;
+}
+
+form select.large,
+button {
+    padding: 12px;
+    border: none;
+    margin: 15px auto 0 auto;
+    display: block;
+    background-color: rgb(176, 177, 181);
+    border-radius: 25px;
+    margin-bottom: 10px;
+}
+
+form select:focus:invalid {
+    outline: 2px solid crimson;
+    background-color: rgb(205, 205, 205);
+    /* background-color: whitesmoke; */
+    font-weight: bold;
+    box-shadow: 0 0 5px rgb(0, 0, 0, 0.5);
+}
+
+form select:invalid {
+    background-color: whitesmoke;
+}
+
+form select.large:valid {
+    font-weight: bold;
+}
+
+
+form select.genre {
+    position: absolute;
+    /*createsslightoverlapwithselectareacoveringsearchbar*/
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    height: 48px;
+    width: 35%;
+    border: none;
+    background-color: rgb(219, 219, 219);
+    border-radius: 30px 0 0 30px;
+    padding: 0 15px 0 15px;
+    -webkit-border-radius: 30px 0 0 30px;
+    -moz-border-radius: 30px 0 0 30px;
+    -ms-border-radius: 30px 0 0 30px;
+}
+
+button {
+    background-color: cornflowerblue;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+form input {
+    border: none;
+    font-size: 13px;
+    height: 48px;
+    margin: 0;
+    width: 70%;
+    font-size: 16px;
+    padding: 0 15px 0 15px;
+}
+
+
+
+
+
+section.left .requests {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 50%;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 15px 15px 0 0;
+    background-color: white;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+
+
+table {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 50%;
+    overflow-x: scroll;
+    background-color: #f2f2f2;
+    width: 50%;
+    opacity: 0.5;
+}
+
+table tr {
+    overflow-x: scroll;
+}
+
+table td {
+    text-align: center;
+    padding: 10px;
+}
+
+table td.separate {
+    padding: 0;
+}
+
+table .Days td.separate {
+    border-right: 1px dashed black;
+}
+
+
+.right aside .playlist-info {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    line-height: 40px;
+    margin-top: -20px;
+    text-align: center;
+    opacity: 0.5;
+    font-size: 20px;
+    padding: 0 20px;
+}
