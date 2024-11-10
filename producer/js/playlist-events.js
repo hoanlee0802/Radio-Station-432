@@ -20,32 +20,36 @@ function createOption(name, value) {
 }
 
 // this function updates the playlist selection dropdown
-function updatePlaylists() {
+function updatePlaylists(match) {
 	const select = document.querySelector('select.playlist');
 	select.textContent = ''; // empty the select Element
-	createOption('Select Playlist', '')
+	createOption('Select Playlist', 'select')
 	dj.currDJ.playlist.names.forEach(function (name) {
 		const opt = createOption(name);
-		opt.selected = true;
+		if (match) {
+			if (match == name) {
+				opt.selected = true;
+			}
+		} else {
+			opt.selected = true; // Will select the last created playlist if no match is specified
+		}
+		
 	})
 	createOption('--+ Create New +--', 'create');
 }
 
+function songsUI() {
+	const songDatabse = document.querySelectorAll('section.left ul li'); // general song sources
 
-document.addEventListener('DOMContentLoaded', function() {
-	const songDatabse = document.querySelectorAll('section.left ul li');
+	const songList = document.querySelector('section.right ul'); // curated song playlist
 
-	const select = document.querySelector('select.playlist');
-	const songList = document.querySelector('section.right ul');
-
-	function clearAddedCSS() {
+	const clearAddedCSS = () => {
 		songDatabse.forEach(function (song) {
 			song.classList.remove('added');
 		})
 	}
 
-	function displaySongs() {
-		setSessionData();
+	const displaySongs = () => {
 		const songs = dj.loadSongs();
 		songList.textContent = '';
 		songs.forEach(function (song) {
@@ -59,29 +63,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
 			// this line querySelector line makes sure that 
 			document.querySelector(`section.left ul li[data-id="${song.id}"]`).classList.add('added');
-			
+
 			songList.innerHTML += element;
-			
+
 		})
 	}
 
+	clearAddedCSS();
+	displaySongs();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+	const select = document.querySelector('select.playlist');
+	
 	select.addEventListener('change', function() {
-		// console.log('select has a value');
 		if (select.value) {
-			clearAddedCSS();
 			if (select.value == 'create') {
 				namePlaylist();
 				updatePlaylists();
-				displaySongs();
-			} else if (select.value == '') { // placeholder select playlist option
+			} else if (select.value == 'select') { // placeholder select playlist option
 				dj.currDJ.currPlaylist = undefined;
 				document.querySelector('.playlist-info').style.display = 'block';
 			} else { // user is selecting existing playlist
 				dj.currDJ.currPlaylist = select.options[select.selectedIndex].text;
-				displaySongs();
+				document.querySelector('.playlist-info').style.display = 'none';
 			}
+			setSessionData();
+			
+			songsUI();
 		}
 	})
 })
 
-export { updatePlaylists }
+export { updatePlaylists, songsUI }

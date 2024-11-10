@@ -1,6 +1,7 @@
 import * as dj from './playlist-data.js';
 import * as profiles from './user-profile.js';
 import { DJProfile } from './user-profile.js';
+import { updatePlaylists, songsUI } from './playlist-events.js';
 
 function $(selector) {
 	return document.querySelector(selector);
@@ -10,26 +11,35 @@ function listDJs() {
 	$('#selectDJ').classList.toggle('hide');
 }
 
+let find;
 
 function getSessionData(name) {
-	const find = profiles.all.find(obj => obj.name == name);
+	find = profiles.all.find(obj => obj.name == name);
 	if (find) {
-		dj.currDJ.currPlaylist = filter.getOnPlaylist();
-		dj.currDJ.playlist = filter.getPlaylists();
+		dj.currDJ.currPlaylist = find.getOnPlaylist();
+		dj.currDJ.playlist = find.getPlaylists();
 	} else {
-		const profile = new DJProfile(name, {}, undefined);
+		const profile = new DJProfile(name, {names: [], data: {}}, undefined);
+		find = profile;
+		
 		profiles.all.push(profile);
+
+		dj.currDJ.currPlaylist = undefined;
+		dj.currDJ.playlist = {names: [], data: {}};
 	}
 
 	dj.currDJ.name = name;
+	updatePlaylists(dj.currDJ.currPlaylist); // providing name parameter looks for match
+	songsUI();
 }
 
-function setSessionData(name) {
-	const find = profiles.all.find(obj => obj.name == name);
+function setSessionData() {
 	if (find) {
-		filter.setOnPlaylist(dj.currDJ.currPlaylist);
-		filter.setPlaylists(dj.currDJ.playlist);
+		find.setOnPlaylist(dj.currDJ.currPlaylist);
+		find.setPlaylists(dj.currDJ.playlist);
 	}
+	
+	songsUI();
 }
 
 

@@ -7,7 +7,7 @@ const currDJ = { // Object maintains a temporary state of DJ data currently bein
 		names: [],
 		data: {
 			// Example of how the data will look:
-			// "playlistName": [ 
+			// "playlistName": [
 			// 		{id: 1, name: 'mySong1'},
 			// 		{id: 2, name: 'mySong2'}
 			// ]
@@ -43,17 +43,15 @@ function createPlaylist(name, data) {
 				else
 					break;
 			}
-			console.log('exited loop');
 			if (!newName.trim())
 				return false; // PlayList Creation Aborted
 			name = newName; // othewise name is newName
 		}
 	}
-	playlist.names.push(name);
-	playlist.data[name] = [];
+	currDJ.playlist.names.push(name);
+	currDJ.playlist.data[name] = [];
 
 	currDJ.currPlaylist = name; // global object will indicate the current playlist
-	currDJ.playlist.data[name] = [];
 	
 	return true; // success
 }
@@ -68,7 +66,7 @@ function appendSong(id, name) {
 }
 
 function loadSongs() {
-	return currDJ.playlist.data[currDJ.currPlaylist];
+	return currDJ.currPlaylist ? currDJ.playlist.data[currDJ.currPlaylist] : [];
 }
 
 export {currDJ, createPlaylist, appendSong, loadSongs};
