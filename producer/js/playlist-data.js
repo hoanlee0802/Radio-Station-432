@@ -12,7 +12,9 @@ const currDJ = { // Object maintains a temporary state of DJ data currently bein
 			// 		{id: 2, name: 'mySong2'}
 			// ]
 		}
-	}
+	},
+	getPlist: function() { return this.playlist.data[this.currPlaylist]},
+	setPlist: function(array) { this.playlist.data[this.currPlaylist] = array}
 }
 
 const set = function setLocal(item, value) {
@@ -58,15 +60,23 @@ function createPlaylist(name, data) {
 
 function appendSong(id, name) {
 	if (currDJ.currPlaylist != undefined) {
-		currDJ.playlist.data[currDJ.currPlaylist].push({
+		currDJ.getPlist().push({
 			id: id, 
 			name: name
 		});
 	}
 }
 
-function loadSongs() {
-	return currDJ.currPlaylist ? currDJ.playlist.data[currDJ.currPlaylist] : [];
+function removeSong(id) {
+	let newList;
+	if (currDJ.getPlist()) {
+		newList = currDJ.getPlist().filter(song => song.id !== id);
+	}
+	currDJ.setPlist(newList);
 }
 
-export {currDJ, createPlaylist, appendSong, loadSongs};
+function loadSongs() {
+	return currDJ.currPlaylist ? currDJ.getPlist() : [];
+}
+
+export {currDJ, createPlaylist, appendSong, removeSong, loadSongs};

@@ -43,9 +43,14 @@ document.addEventListener('DOMContentLoaded', function() {
 	/* Removes song from the second list */
 	function removeSong(ref) {
 		const id = ref.getAttribute('data-id');
+
+		dj.removeSong(id);
+
 		const addedEle = songList1.querySelector(`li[data-id="${id}"]`);
 		addedEle.classList.remove('added');
 		ref.remove();
+
+		setSessionData();
 	}
 
 	function action(ele, icon) {
