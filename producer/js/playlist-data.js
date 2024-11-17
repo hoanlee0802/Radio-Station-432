@@ -59,11 +59,30 @@ function createPlaylist(name, data) {
 }
 
 function deletePlaylist() {
-	const check = confirm("Are you sure you want to delete this playlist?");
+	const check = confirm(`Are you sure you want to delete the playlist "${currDJ.currPlaylist}"?`);
 	if (check && currDJ.getPlist()) {
 		delete currDJ.playlist.data[currDJ.currPlaylist]; // removes the object property (key) from the list
 		currDJ.playlist.names = currDJ.playlist.names.filter(name => name != currDJ.currPlaylist);
 		currDJ.currPlaylist = undefined;
+
+		return true;
+	}
+}
+
+function renamePlaylist() {
+	const label = currDJ.currPlaylist;
+	const ask = prompt(`What would you like to rename the playlist "${currDJ.currPlaylist}"?`);
+
+	if (ask) {
+		const index = currDJ.playlist.names.indexOf(label);
+		currDJ.playlist.names[index] = ask;
+
+		const storeData = currDJ.getPlist();
+		delete currDJ.playlist.data[currDJ.currPlaylist];
+		currDJ.currPlaylist = ask;
+		currDJ.setPlist(storeData);
+
+		return true;
 	}
 }
 
@@ -88,4 +107,4 @@ function loadSongs() {
 	return currDJ.currPlaylist ? currDJ.getPlist() : [];
 }
 
-export {currDJ, createPlaylist, deletePlaylist, appendSong, removeSong, loadSongs};
+export {currDJ, createPlaylist, deletePlaylist, renamePlaylist, appendSong, removeSong, loadSongs};

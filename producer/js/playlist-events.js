@@ -14,6 +14,10 @@ function removePlaylist() {
 	dj.deletePlaylist();
 }
 
+function renamePlaylist() {
+	dj.renamePlaylist();
+}
+
 function createOption(name, value) {
 	const select = document.querySelector('select.playlist');
 	const option = document.createElement('option');
@@ -31,8 +35,10 @@ function updatePlaylists(match) {
 	opt.selected = true; // Sets the default no playlist selected option
 	if (dj.currDJ.playlist.names.length > 0 && dj.currDJ.currPlaylist != undefined)
 		document.querySelector('table').classList.remove('disabled');
-	else
+	else {
 		document.querySelector('.playlist-info').style.display = 'block';
+		document.querySelector('table').classList.add('disabled');
+	}
 	
 	dj.currDJ.playlist.names.forEach(function (name) {
 		opt = createOption(name);
@@ -113,6 +119,11 @@ document.addEventListener('DOMContentLoaded', function() {
 		removePlaylist();
 		updatePlaylists();
 		songsUI();
+	})
+
+	renameBtn.addEventListener('click', function() {
+		renamePlaylist();
+		updatePlaylists(dj.currDJ.currPlaylist);
 	})
 })
 
