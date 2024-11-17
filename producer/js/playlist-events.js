@@ -10,6 +10,10 @@ function namePlaylist() {
 	}
 }
 
+function removePlaylist() {
+	dj.deletePlaylist();
+}
+
 function createOption(name, value) {
 	const select = document.querySelector('select.playlist');
 	const option = document.createElement('option');
@@ -23,18 +27,24 @@ function createOption(name, value) {
 function updatePlaylists(match) {
 	const select = document.querySelector('select.playlist');
 	select.textContent = ''; // empty the select Element
-	createOption('Select Playlist', 'select')
+	let opt = createOption('Select Playlist', 'select');
+	opt.selected = true; // Sets the default no playlist selected option
+	if (dj.currDJ.playlist.names.length > 0 && dj.currDJ.currPlaylist != undefined)
+		document.querySelector('table').classList.remove('disabled');
+	else
+		document.querySelector('.playlist-info').style.display = 'block';
+	
 	dj.currDJ.playlist.names.forEach(function (name) {
-		const opt = createOption(name);
+		opt = createOption(name);
 		if (match) {
 			if (match == name) {
 				opt.selected = true;
 			}
-		} else {
-			opt.selected = true; // Will select the last created playlist if no match is specified
 		}
-		
 	})
+	if (match === true) { // select the last added/created playlist if true is passed in
+		opt.selected = true;
+	}
 	createOption('--+ Create New +--', 'create');
 }
 
@@ -51,6 +61,7 @@ function songsUI() {
 
 	const displaySongs = () => {
 		const songs = dj.loadSongs();
+		
 		songList.textContent = '';
 		songs.forEach(function (song) {
 			// const li = document.createElement('li');
@@ -75,23 +86,33 @@ function songsUI() {
 
 document.addEventListener('DOMContentLoaded', function() {
 	const select = document.querySelector('select.playlist');
+	const deleteBtn = document.querySelector('button.delete');
+	const renameBtn = document.querySelector('button.rename');
 	
 	select.addEventListener('change', function() {
 		if (select.value) {
 			if (select.value == 'create') {
 				namePlaylist();
-				updatePlaylists();
+				updatePlaylists(true);
 			} else if (select.value == 'select') { // placeholder select playlist option
 				dj.currDJ.currPlaylist = undefined;
 				document.querySelector('.playlist-info').style.display = 'block';
+				document.querySelector('table').classList.add('disabled');
 			} else { // user is selecting existing playlist
 				dj.currDJ.currPlaylist = select.options[select.selectedIndex].text;
 				document.querySelector('.playlist-info').style.display = 'none';
+				document.querySelector('table').classList.remove('disabled');
 			}
 			setSessionData();
 			
 			songsUI();
 		}
+	})
+
+	deleteBtn.addEventListener('click', function() {+
+		removePlaylist();
+		updatePlaylists();
+		songsUI();
 	})
 })
 

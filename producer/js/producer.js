@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		if (!ref.classList.contains('added')) {
 			if (dj.currDJ.currPlaylist == undefined) {
 				dj.createPlaylist();
-				updatePlaylists();
+				updatePlaylists(true);
 				songsUI();
 			}
 

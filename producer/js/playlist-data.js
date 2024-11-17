@@ -58,6 +58,15 @@ function createPlaylist(name, data) {
 	return true; // success
 }
 
+function deletePlaylist() {
+	const check = confirm("Are you sure you want to delete this playlist?");
+	if (check && currDJ.getPlist()) {
+		delete currDJ.playlist.data[currDJ.currPlaylist]; // removes the object property (key) from the list
+		currDJ.playlist.names = currDJ.playlist.names.filter(name => name != currDJ.currPlaylist);
+		currDJ.currPlaylist = undefined;
+	}
+}
+
 function appendSong(id, name) {
 	if (currDJ.currPlaylist != undefined) {
 		currDJ.getPlist().push({
@@ -71,12 +80,12 @@ function removeSong(id) {
 	let newList;
 	if (currDJ.getPlist()) {
 		newList = currDJ.getPlist().filter(song => song.id !== id);
+		currDJ.setPlist(newList);
 	}
-	currDJ.setPlist(newList);
 }
 
 function loadSongs() {
 	return currDJ.currPlaylist ? currDJ.getPlist() : [];
 }
 
-export {currDJ, createPlaylist, appendSong, removeSong, loadSongs};
+export {currDJ, createPlaylist, deletePlaylist, appendSong, removeSong, loadSongs};
