@@ -37,15 +37,17 @@ function createPlaylist(name, data) {
 		}
 		name = checked; // name is now verified
 	} else {
+		name = prompt("Enter Playlist Name");
+		if (name == undefined) return false; // user cancelled the prompt
 		if (playlist.names.includes(name) || name.trim() == '') {
 			let newName = prompt(`Name already used/invalid.`).trim();
 			while (newName) {
 				if (playlist.names.includes(newName) || newName.trim() == '')
 					newName = prompt(`"${newName}" is still a used/invalid name`).trim();
 				else
-					break;
+					break; // newName is unique and not just whitespace
 			}
-			if (!newName.trim())
+			if (!newName)
 				return false; // PlayList Creation Aborted
 			name = newName; // othewise name is newName
 		}

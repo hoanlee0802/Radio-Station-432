@@ -3,11 +3,13 @@ import { setSessionData } from './select-dj.js';
 
 
 function namePlaylist() {
-	let newName = prompt("Enter Playlist Name").trim();
-	const success = dj.createPlaylist(newName);
+	const success = dj.createPlaylist(true);
+	
 	if (success) {
 		document.querySelector('section.right .playlist-info').style.display = 'none';
+		updatePlaylists(true);
 	}
+	return success;
 }
 
 function removePlaylist() {
@@ -27,6 +29,7 @@ function createOption(name, value) {
 	return option; // further manipulation of element enabled
 }
 
+let prevIndex; // will remember the last selected option in case user aborts playlist creation
 // this function updates the playlist selection dropdown
 function updatePlaylists(match) {
 	const select = document.querySelector('select.playlist');
@@ -51,6 +54,7 @@ function updatePlaylists(match) {
 	if (match === true) { // select the last added/created playlist if true is passed in
 		opt.selected = true;
 	}
+	prevIndex = select.selectedIndex; // will remember the current selection in case user aborts playlist creation
 	createOption('--+ Create New +--', 'create');
 }
 
@@ -94,12 +98,14 @@ document.addEventListener('DOMContentLoaded', function() {
 	const select = document.querySelector('select.playlist');
 	const deleteBtn = document.querySelector('button.delete');
 	const renameBtn = document.querySelector('button.rename');
-	
+
 	select.addEventListener('change', function() {
 		if (select.value) {
 			if (select.value == 'create') {
-				namePlaylist();
-				updatePlaylists(true);
+				
+				const success = namePlaylist();
+				if (!success) select.selectedIndex = prevIndex; // if the user aborted playlist creation, go back to last selected option
+				
 			} else if (select.value == 'select') { // placeholder select playlist option
 				dj.currDJ.currPlaylist = undefined;
 				document.querySelector('.playlist-info').style.display = 'block';
@@ -108,7 +114,10 @@ document.addEventListener('DOMContentLoaded', function() {
 				dj.currDJ.currPlaylist = select.options[select.selectedIndex].text;
 				document.querySelector('.playlist-info').style.display = 'none';
 				document.querySelector('table').classList.remove('disabled');
+
+				
 			}
+			prevIndex = select.selectedIndex; // store the previously selected playlist
 			setSessionData();
 			
 			songsUI();
