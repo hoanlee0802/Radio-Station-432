@@ -7,9 +7,10 @@ body {
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+    width: 100%;
+    max-width: 1200px; 
+    margin: 0 auto;
+    padding: 20px;
 }
 
 header {
@@ -68,6 +69,7 @@ nav a {
 
 nav .active {
     color: purple;
+    font-weight: bold;
 }
 
 .signout {
@@ -85,6 +87,9 @@ main {
     padding: 20px;
     background-color: #eee;
     color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .schedule select {
@@ -107,7 +112,126 @@ main {
     text-align: left;
 }
 
-.playlist button {
-    padding: 5px 10px;
-    cursor: pointer;
+.playlist tr:hover {
+    background-color: #f1f1f1;
 }
+
+.delete-btn {
+    background-color: #ff4d4d;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    color: white;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.delete-btn:hover {
+    background-color: #cc0000;
+}
+
+.player {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    background-color: #333;
+    color: white;
+    justify-content: center;
+}
+
+.play-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+}
+
+.play-btn:hover {
+    color: #ddd;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+    }
+
+    aside {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    .playlist table {
+        font-size: 12px;
+    }
+}
+
+/* Side Nav Bar */
+aside#sidebar {
+    background-color: #f0f0f0;
+    width: 250px;
+    padding: 20px;
+    color: black;
+    top: 55px; /* Height of Header */
+    bottom: 0;
+}
+
+/* Style the playlist form */
+#playlistForm {
+    width: 100%;
+    margin: 20px 0;
+}
+
+/* Center the Playlist Details heading */
+#playlistForm h2 {
+    text-align: center;
+}
+
+/* Center the label and input elements */
+#playlistForm label,
+#playlistForm input {
+    display: block;
+    margin: 10px auto;
+    width: 100%;
+    max-width: 600px; /* Adjust the max-width as needed */
+}
+
+/* Style the playlist table */
+.playlist {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.playlist th,
+.playlist td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.playlist th {
+    background-color: #f2f2f2;
+}
+
+/* Ensure the main content takes full width */
+main {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Remove default margins and paddings */
+body, html {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+

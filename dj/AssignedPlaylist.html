@@ -22,170 +22,87 @@
 </head>
 
 <body>
-    <div class="container">
-        <header>
+    <!-- <header>
             <h1>RADIO STATION</h1>
             <nav class="nav-buttons">
                 <button>Manager</button>
                 <button>Producer</button>
                 <button class="active">DJ</button>
             </nav>
-        </header>
-        <div class="main-content">
-            <main>
-                <div class="schedule">
-                    <h2>Select the time slots</h2>
-                    <select>
-                        <option>9:00 - 11:00</option>
-                        <option>11:00 - 13:00</option>
-                        <option>13:00 - 15:00</option>
-                        <option>15:00 - 17:00</option>
-                    </select>
-                </div>
-                <div class="playlist">
-                    <h2>Playlist's Name</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Song</th>
-                                <th>Artist</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>🎵</td>
-                                <td>Song 1</td>
-                                <td>Artist 1</td>
-                                <td><button>+</button></td>
-                            </tr>
-                            <tr>
-                                <td>🎵</td>
-                                <td>Song 2</td>
-                                <td>Artist 2</td>
-                                <td><button>+</button></td>
-                            </tr>
-                            <tr>
-                                <td>🎵</td>
-                                <td>Song 3</td>
-                                <td>Artist 3</td>
-                                <td><button>+</button></td>
-                            </tr>
-                            <tr>
-                                <td>🎵</td>
-                                <td>Song 4</td>
-                                <td>Artist 4</td>
-                                <td><button>+</button></td>
-                            </tr>
-                            <tr></tr>
-                            <td>🎵</td>
-                            <td>Song 5</td>
-                            <td>Artist 5</td>
-                            <td><button>+</button></td>
-                            </tr>
-                            <tr></tr>
-                            <td>🎵</td>
-                            <td>Song 6</td>
-                            <td>Artist 6</td>
-                            <td><button>+</button></td>
-                            </tr>
-                            <tr></tr>
-                            <td>🎵</td>
-                            <td>Song 7</td>
-                            <td>Artist 7</td>
-                            <td><button>+</button></td>
-                            </tr>
-                            <tr>
-                                <td>🎵</td>
-                                <td>Song 8</td>
-                                <td>Artist 8</td>
-                                <td><button>+</button></td>
-                            </tr>
-                            <tr>
-                                <td>🎵</td>
-                                <td>Song 9</td>
-                                <td>Artist 9</td>
-                                <td><button>+</button></td>
-                            </tr>
-                            <tr>
-                                <td>🎵</td>
-                                <td>Song 10</td>
-                                <td>Artist 10</td>
-                                <td><button>+</button></td>
-                            </tr>
-                            <tr>
-                                <td>🎵</td>
-                                <td>Song 11</td>
-                                <td>Artist 11</td>
-                                <td><button>+</button></td>
-                            </tr>
-                            <tr></tr>
-                            <td>🎵</td>
-                            <td>Song 12</td>
-                            <td>Artist 12</td>
-                            <td><button>+</button></td>
-                            </tr>
-                            <tr></tr>
-                            <td>🎵</td>
-                            <td>Song 13</td>
-                            <td>Artist 13</td>
-                            <td><button>+</button></td>
-                            </tr>
-                            <tr>
-                                <td>🎵</td>
-                                <td>Song 14</td>
-                                <td>Artist 14</td>
-                                <td><button>+</button></td>
-                            </tr>
-                            <tr>
-                                <td>🎵</td>
-                                <td>Song 15</td>
-                                <td>Artist 15</td>
-                                <td><button>+</button></td>
-                            </tr>
-                            <tr>
-                                <td>🎵</td>
-                                <td>Song 16</td>
-                                <td>Artist 16</td>
-                                <td><button>+</button></td>
-                            </tr>
-                            <tr>
-                                <td>🎵</td>
-                                <td>Song 17</td>
-                                <td>Artist 17</td>
-                                <td><button>+</button></td>
-                            </tr>
-                            <tr>
-                                <td>🎵</td>
-                                <td>Song 18</td>
-                                <td>Artist 18</td>
-                                <td><button>+</button></td>
-                            </tr>
-                            <tr>
-                                <td>🎵</td>
-                                <td>Song 19</td>
-                                <td>Artist 19</td>
-                                <td><button>+</button></td>
-                            </tr>
-                            <tr>
-                                <td>🎵</td>
-                                <td>Song 20</td>
-                                <td>Artist 20</td>
-                                <td><button>+</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="my-playlist">
-                    <button onclick="window.location.href='MyPlaylist.html'">Go to My Playlist</button>
-                </div>
-
-            </main>
+        </header> -->
+    <header>
+        <a href="../group10.html">
+        <span class="left" onclick="showSidebar()">
+            <i class="material-icons">person</i>
+        </span>
+        </a>
+        <!-- <h1>RADIO STATION</h1> -->
+        <span class="right">
+            <i class="material-symbols-outlined">info_i</i>
+        </span>
+    </header>
+    
+    <!-- <aside id="sidebar">
+        <div class="profile" onclick="window.location = '../group10.html'">
+            <img src="../profile-pic.png" alt="Profile Picture">
+            <p>User1</p>
         </div>
+        <nav>
+            <ul>
+                <li><button onclick="window.location.href='AssignedPlaylist.html'">Assigned Playlist</button>
+                <li><button onclick="window.location.href='MyPlaylist.html'">My Playlist</button>
+             <li><button onclick="window.location.href='MyPlaylist.html'">xxx</button>
+            </ul>
+        </nav>
+        <button class="signout" onclick="window.location.href = '../group10.html'">Sign out</button>
+    </aside> -->
+
+    <main>
+        <div class="container">
+        <h1>Assigned Playlist</h1>
+
+        <!-- Time Slot Selection -->
+        <div class="schedule">
+            <h2>Select the Time Slot</h2>
+            <select id="timeSlotSelect">
+                <option value="">--Select Time Slot--</option>
+                <option value="9:00 - 11:00">9:00 - 11:00</option>
+                <option value="11:00 - 13:00">11:00 - 13:00</option>
+                <option value="13:00 - 15:00">13:00 - 15:00</option>
+                <option value="15:00 - 17:00">15:00 - 17:00</option>
+            </select>
+        </div>
+
+        <!-- Playlist Form -->
+        <form id="playlistForm">
+            <h2>Playlist Details</h2>
+            <label for="playlistName">Playlist Name:</label>
+            <input type="text" id="playlistName" name="playlistName" readonly>
+
+            <table class="playlist">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Song</th>
+                        <th>Artist</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="playlistTableBody">
+                </tbody>
+            </table>
+
+            <!-- Optionally, include submit button if needed -->
+            <button type="submit">Save Playlist</button>
+        </form>
     </div>
-    <!-- <script src="js/dj.js"></script> -->
+
+        <div class="my-playlist" style="text-align: center;"></div>
+            <button onclick="window.location.href='MyPlaylist.html'">Go to My Playlist</button>
+        </div>
+
+    </main>
+    <script type="module" src="js/dj.js"></script>
 </body>
 
 </html>
