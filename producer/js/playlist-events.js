@@ -1,3 +1,4 @@
+import { _el } from '../../global.js';
 import * as dj from './playlist-data.js';
 import { setSessionData } from './select-dj.js';
 
@@ -6,7 +7,7 @@ function namePlaylist() {
 	const success = dj.createPlaylist(true);
 	
 	if (success) {
-		document.querySelector('section.right .playlist-info').style.display = 'none';
+		_el('section.right .playlist-info').style.display = 'none';
 		updatePlaylists(true);
 	}
 	return success;
@@ -21,7 +22,7 @@ function renamePlaylist() {
 }
 
 function createOption(name, value) {
-	const select = document.querySelector('select.playlist');
+	const select = _el('select.playlist');
 	const option = document.createElement('option');
 	option.textContent = name;
 	if (value != null) option.value = value;
@@ -32,15 +33,15 @@ function createOption(name, value) {
 let prevIndex; // will remember the last selected option in case user aborts playlist creation
 // this function updates the playlist selection dropdown
 function updatePlaylists(match) {
-	const select = document.querySelector('select.playlist');
+	const select = _el('select.playlist');
 	select.textContent = ''; // empty the select Element
 	let opt = createOption('Select Playlist', 'select');
 	opt.selected = true; // Sets the default no playlist selected option
 	if (dj.currDJ.playlist.names.length > 0 && dj.currDJ.currPlaylist != undefined)
-		document.querySelector('table').classList.remove('disabled');
+		_el('table').classList.remove('disabled');
 	else {
-		document.querySelector('.playlist-info').style.display = 'block';
-		document.querySelector('table').classList.add('disabled');
+		_el('.playlist-info').style.display = 'block';
+		_el('table').classList.add('disabled');
 	}
 	
 	dj.currDJ.playlist.names.forEach(function (name) {
@@ -61,7 +62,7 @@ function updatePlaylists(match) {
 function songsUI() {
 	const songDatabse = document.querySelectorAll('section.left ul li'); // general song sources
 
-	const songList = document.querySelector('section.right ul'); // curated song playlist
+	const songList = _el('section.right ul'); // curated song playlist
 
 	const clearAddedCSS = () => {
 		songDatabse.forEach(function (song) {
@@ -83,7 +84,7 @@ function songsUI() {
 			</li>`;
 
 			// this line querySelector line makes sure that 
-			document.querySelector(`section.left ul li[data-id="${song.id}"]`).classList.add('added');
+			_el(`section.left ul li[data-id="${song.id}"]`).classList.add('added');
 
 			songList.innerHTML += element;
 
@@ -95,9 +96,9 @@ function songsUI() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-	const select = document.querySelector('select.playlist');
-	const deleteBtn = document.querySelector('button.delete');
-	const renameBtn = document.querySelector('button.rename');
+	const select = _el('select.playlist');
+	const deleteBtn = _el('button.delete');
+	const renameBtn = _el('button.rename');
 
 	select.addEventListener('change', function() {
 		if (select.value) {
@@ -108,12 +109,12 @@ document.addEventListener('DOMContentLoaded', function() {
 				
 			} else if (select.value == 'select') { // placeholder select playlist option
 				dj.currDJ.currPlaylist = undefined;
-				document.querySelector('.playlist-info').style.display = 'block';
-				document.querySelector('table').classList.add('disabled');
+				_el('.playlist-info').style.display = 'block';
+				_el('table').classList.add('disabled');
 			} else { // user is selecting existing playlist
 				dj.currDJ.currPlaylist = select.options[select.selectedIndex].text;
-				document.querySelector('.playlist-info').style.display = 'none';
-				document.querySelector('table').classList.remove('disabled');
+				_el('.playlist-info').style.display = 'none';
+				_el('table').classList.remove('disabled');
 
 				
 			}

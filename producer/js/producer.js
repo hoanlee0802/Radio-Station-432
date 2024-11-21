@@ -1,19 +1,15 @@
+import { _el } from '../../global.js';
 import * as dj from './playlist-data.js';
 import { updatePlaylists, songsUI } from './playlist-events.js';
 import { setSessionData } from './select-dj.js';
 
-function $(selector) {
-	return document.querySelector(selector);
-}
-
 document.addEventListener('DOMContentLoaded', function() {
-	const songLists = $("section ul");
-	const songList1 = $("section.left ul");
-	const songList2 = $("section.right ul");
+	const songList1 = _el("section.left ul");
+	const songList2 = _el("section.right ul");
 
 	/* Adds song to the second list */
 	function addSong(ref) {
-		$('.playlist-info').style.display = 'none';
+		_el('.playlist-info').style.display = 'none';
 		if (!ref.classList.contains('added')) {
 			if (dj.currDJ.currPlaylist == undefined) {
 				dj.createPlaylist();

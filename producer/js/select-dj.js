@@ -1,14 +1,11 @@
+import { _el } from '../../global.js';
 import * as dj from './playlist-data.js';
 import * as profiles from './user-profile.js';
 import { DJProfile } from './user-profile.js';
 import { updatePlaylists, songsUI } from './playlist-events.js';
 
-function $(selector) {
-	return document.querySelector(selector);
-}
-
 function listDJs() {
-	$('#selectDJ').classList.toggle('hide');
+	_el('#selectDJ').classList.toggle('hide');
 }
 
 let find;
@@ -44,11 +41,11 @@ function setSessionData() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-	const confirmBtn = $('#selectDJ form');
-	const listDJ = $('header span.right');
+	const confirmBtn = _el('#selectDJ form');
+	const listDJ = _el('header span.right');
 
-	const selectDJ = $('#selectDJ select.dj')
-	const timeslot = $('#selectDJ select.timeslot');
+	const selectDJ = _el('#selectDJ select.dj')
+	const timeslot = _el('#selectDJ select.timeslot');
 
 	selectDJ.addEventListener('change', function() {
 		if (selectDJ.value != "") {
