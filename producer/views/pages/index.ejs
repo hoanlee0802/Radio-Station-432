@@ -74,13 +74,6 @@
 				<%- include('../partials/songFilter'); %>
 			</form>
 			<ul>
-				<% songs.forEach(function(song) { %>
-					<li class="song" data-id="<%= song.id %>">
-						<i class="material-symbols-outlined thin-outline">play_arrow</i>
-						"<%= song.name %>" by <%= song.artist %>
-						<i class="material-symbols-outlined right">add_circle</i>
-					</li>
-				<% }); %>
 				<%- include('../partials/songDatabase') %>
 			</ul>
 

@@ -36,12 +36,16 @@ app.use(express.urlencoded({ extended: true }));
 const songRouter = require('./server/handlers/songLibraryRouter.js')
 
 // index page
-app.get('/producer', async function(req, res) {
-	
-	res.render('pages/index', {
-		songs: songRouter.handleAllSongs(app, Song), //  does not work possible asynchronous issues
-		songs: [{ id: 1, name: "Test EJS forEach", artist: "It works" }] // overwritten to check forEach works
-	});
+app.get('/producer', function(req, res) {
+	let jsonData;
+	songRouter.handleAllSongs(app, Song)
+		.then(json => {
+			res.render('pages/index', {
+				songs: JSON.parse(json)
+				// songs: [{ id: 1, name: "Test EJS forEach", artist: "It works" }] // overwritten to check forEach works
+			});
+		})
+		.catch(err => console.log(err));
 });
 
 // create a connection to database
