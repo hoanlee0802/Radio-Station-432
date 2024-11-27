@@ -86,19 +86,30 @@ app.get('/producer/:userID', function(req, res) {
 
 const ProducerHandler = require('./server/handlers/ProducerHandler.js');
 
-// handles post requests when there is a valid user ID in the URL
-app.route('/producer/:userID').post((req, res) => {
+function handleFetchRequest(req, res, action, funcName) {
 	// console.log(req.body.pListName, req.body.newData); req.body contains data sent from fetch request in playlist-data.js
-	ProducerHandler.updateCurrPlaylist(req.params.userID, req.body.pListName, req.body.newData)
+	ProducerHandler[funcName](req.params.userID, req.body.pListName, req.body.newData)
 		.then(() => {
-			// console.log("POST fetch received");
-			renderProd(req, res, false);
+			console.log(`${action} fetch received`);
+			res.status(200).send('Received fetch request');
+			// renderProd(req, res, false);
 		})
 		.catch(err => {
 			console.error(err);
-			res.status(500).send("Error updating playlist");
+			res.status(500).send(`${action} Error`);
 		});
-	
+}
+
+// handles post requests when there is a valid user ID in the URL
+app.route('/producer/:userID').put((req, res) => {
+	handleFetchRequest(req, res, 'update PUT', 'updateCurrPlaylist');
+
+}).post((req, res) => {
+	handleFetchRequest(req, res, 'create POST', 'createPlaylist')
+
+}).delete((req, res) => {
+	handleFetchRequest(req, res, 'DELETE', 'deletePlaylist')
+
 });
 
 

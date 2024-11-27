@@ -18,27 +18,39 @@ const currDJ = { // Object maintains a temporary state of DJ data currently bein
 	setPlist: function(array) { this.playlist.data[this.currPlaylist] = array}
 }
 
-async function updateDatabase() {
-	await fetch(`/producer/${window.location.pathname.split('/').pop()}/`, {
-		method: 'POST',
-		mode: 'cors',
+// sends an HTTP Method request at the current URL of /producer/{userID}
+async function playlistDB(action) {
+	let HTTPmethod = 'GET'; // no valid action specified assumes GET
+	let useData = false;
+	switch (action) {
+		case 'update':
+			HTTPmethod = 'PUT'; useData = true; // these include new data in the body
+			break;
+		case 'create':
+			HTTPmethod = 'POST'; useData = true; // these include new data in the body
+			break;
+		case 'delete':
+			HTTPmethod = 'DELETE';
+			break;
+	}
+	await fetch(window.location.pathname, {
+		method: HTTPmethod,
 		headers: {
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
 			id: currDJ.id,
 			pListName: currDJ.currPlaylist,
-			newData: currDJ.playlist
+			newData: useData ? currDJ.getPlist() : undefined // stringify will automatically remove undefined properties
 		})
 	})
-	// .then(response => response.text())
 	.then(data => {
-		console.log("Fetch request successful");
-		console.log(data);
+		console.log("Fetch request successful", data);
 		return data;
 	})
 	.catch(err => console.error(err));
 }
+
 
 function createPlaylist(name, data) {
 	let playlist = currDJ.playlist;
@@ -72,7 +84,7 @@ function createPlaylist(name, data) {
 
 	currDJ.currPlaylist = name; // global object will indicate the current playlist
 
-	updateDatabase();
+	playlistDB('create');
 	
 	return true; // success
 }
@@ -80,11 +92,11 @@ function createPlaylist(name, data) {
 function deletePlaylist() {
 	const check = confirm(`Are you sure you want to delete the playlist "${currDJ.currPlaylist}"?`);
 	if (check && currDJ.getPlist()) {
+		playlistDB('delete'); // delete from database before deleting locally (need to ref. currPlaylist)
+
 		delete currDJ.playlist.data[currDJ.currPlaylist]; // removes the object property (key) from the list
 		currDJ.playlist.names = currDJ.playlist.names.filter(name => name != currDJ.currPlaylist);
 		currDJ.currPlaylist = undefined;
-
-		updateDatabase();
 
 		return true;
 	}
@@ -103,7 +115,7 @@ function renamePlaylist() {
 		currDJ.currPlaylist = ask;
 		currDJ.setPlist(storeData);
 
-		updateDatabase();
+		playlistDB('update');
 
 		return true;
 	}
@@ -115,8 +127,9 @@ function pushSong(id, name) {
 			id: id, 
 			name: name
 		});
+		console.log(`current playlist: ${currDJ.currPlaylist}`);
 
-		updateDatabase();
+		playlistDB('update');
 	}
 }
 
@@ -125,8 +138,9 @@ function removeSong(id) {
 	if (currDJ.getPlist()) {
 		newList = currDJ.getPlist().filter(song => song.id !== id);
 		currDJ.setPlist(newList);
+		console.log(`current playlist: ${currDJ.currPlaylist}`);
 
-		updateDatabase();
+		playlistDB('update');
 	}
 }
 
@@ -134,4 +148,4 @@ function loadSongs() {
 	return currDJ.currPlaylist ? currDJ.getPlist() : [];
 }
 
-export {currDJ, createPlaylist, deletePlaylist, renamePlaylist, pushSong, removeSong, loadSongs};
+export { currDJ, createPlaylist, deletePlaylist, renamePlaylist, pushSong, removeSong, loadSongs, playlistDB };
