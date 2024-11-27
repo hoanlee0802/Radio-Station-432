@@ -3,7 +3,7 @@ const handleAllSongs = (app, Song) => {
 	return new Promise((resolve, reject) => {
 		Song.find()
 			.then(data => {
-				console.log(JSON.stringify(data));
+				// console.log(JSON.stringify(data));
 				resolve(JSON.stringify(data));
 			})
 			.catch(err => {

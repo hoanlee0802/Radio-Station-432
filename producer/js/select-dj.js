@@ -47,19 +47,29 @@ document.addEventListener('DOMContentLoaded', function() {
 	const selectDJ = _el('#selectDJ select.dj')
 	const timeslot = _el('#selectDJ select.timeslot');
 
+	let selected;
+
 	selectDJ.addEventListener('change', function() {
 		if (selectDJ.value != "") {
 			timeslot.removeAttribute('disabled');
+			selected = selectDJ.options[selectDJ.selectedIndex];
+			
 		} else {
 			timeslot.setAttribute('disabled', '');
 			timeslot.value = "";
 		}
+
+
 	})
 
 
 	confirmBtn.addEventListener('submit', function(e) {
 		e.preventDefault();
-		getSessionData(selectDJ.options[selectDJ.selectedIndex].text);
+		getSessionData(selected.text);
+
+		console.log(selected.getAttribute('data-id'));
+		window.location.href = selected.getAttribute('data-id');
+		console.log(window.location.href);
 
 		listDJs(); // this will hide the DJ list
 	});

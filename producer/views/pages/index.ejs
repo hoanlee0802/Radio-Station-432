@@ -3,12 +3,6 @@
 <head>
 	<%- include('../partials/head'); %>
 
-	<script src="../global.js" type="module"></script>
-	<script src="js/producer.js" type="module"></script>
-	<script src="js/select-dj.js" type="module"></script>
-	<script src="js/user-profile.js" type="module"></script>
-	<script src="js/playlist-data.js" type="module"></script>
-	<script src="js/playlist-events.js" type="module"></script>
 	<style>
 		/* Great Flex Reference: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
 		ul {
@@ -32,18 +26,8 @@
 </head>
 
 <body>
-	<header>
-		<!-- <a href="../group10.html"> -->
-		<span class="left" onclick="showSidebar()">
-			<i class="material-icons">person</i>
-		</span>
-		<!-- </a> -->
-		PRODUCER
-		<span class="right">
-			<i class="material-symbols-outlined">album</i>
-		</span>
-	</header>
-	<div id="selectDJ">
+	<%- include('../partials/header') %>\
+	<div id="selectDJ" class=" <%if(!overlay){%> hide <%}%> ">
 		<%- include('../partials/selectDJ'); %>
 	</div>
 	<aside id="sidebar">
@@ -86,17 +70,20 @@
 				<h3>YOUR PLAYLISTS</h3>
 				<select class="playlist large" required>
 					<option value="select">Select Playlist</option>
-					<option>Top 40</option>
-					<option>Ambient Light Rock</option>
-					<option>Top Picks</option>
+					<!-- Process Array of Playlist Names -->
+					<% playlists.forEach(function(playlist) { %>
+						<option>playlist</option> 
+					<% }); %>
 					<option value="create">--+ Create New +--</option>
 				</select>
 				<%- include('../partials/songFilter'); %>
 			</form>
 			<aside>
 				<span class="playlist-info">
-					Add Songs to Auto-Create a Playlist
+					<span style="display: block;">Add Songs to Auto-Create a Playlist</span>
+					<caption style="display: block;">(try double clicking a song)</caption>
 				</span>
+				
 			</aside>
 			<ul>
 

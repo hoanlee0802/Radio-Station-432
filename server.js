@@ -1,7 +1,10 @@
 require('dotenv').config();
 
+const bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
+
+app.use(bodyParser.json());
 
 // Global Static Files currently in same directory as server file:
 app.use(express.static(__dirname));
@@ -29,26 +32,130 @@ app.set('/', function(req, res) {
 	res.render(/* Our group 10 EJS file when it exists */);
 });
 
-const Song = require('./server/models/Song')
 // tell node to use json and HTTP header features in body-parser
 app.use(express.urlencoded({ extended: true }));
 
-const songRouter = require('./server/handlers/songLibraryRouter.js')
+const Song = require('./server/models/Song');
+const User = require('./server/models/User');
 
-// index page
-app.get('/producer', function(req, res) {
-	let jsonData;
-	songRouter.handleAllSongs(app, Song)
-		.then(json => {
-			res.render('pages/index', {
-				songs: JSON.parse(json)
-				// songs: [{ id: 1, name: "Test EJS forEach", artist: "It works" }] // overwritten to check forEach works
-			});
-		})
-		.catch(err => console.log(err));
+const songHandler = require('./server/handlers/songLibraryHandler.js');
+const userHandler = require('./server/handlers/userHandler.js');
+
+//**  ROUTES:  **//
+
+
+//* Manager Routes
+//...
+
+
+
+//* Producer Routes
+// landing page with selectDJ option
+app.get('/producer', function (req, res) {
+	const prom1 = userHandler.handleAllUsers(app, User, req.params.userID); // Promise gets data for single user
+	const prom2 = songHandler.handleAllSongs(app, Song); // Promise loads the left panel Song Library database
+
+	Promise.all([prom1, prom2]).then(arrayOfResolves => {
+		[users, songLibrary] = arrayOfResolves; // array destructuring creates variables containing each request result
+		const allUsers = JSON.parse(users);
+		const songLib = JSON.parse(songLibrary);
+
+		res.render('pages/index', {
+			users: allUsers, // renders the playlists in dropdown (potentially subject to change)
+			songs: songLib,
+			playlists: [], //placeholder empty value will be updated later
+			overlay: true
+		});
+	});
 });
 
-// create a connection to database
+function djRender(req, res, showOverlay) {
+	const prom1 = userHandler.handleAllUsers(app, User, req.params.userID); // Promise gets data for single user
+	const prom2 = songHandler.handleAllSongs(app, Song); // Promise loads the left panel Song Library database
+
+	Promise.all([prom1, prom2]).then(arrayOfResolves => {
+		[users, songLibrary] = arrayOfResolves; // array destructuring creates variables containing each request result
+		const allUsers = JSON.parse(users);
+		const songLib = JSON.parse(songLibrary);
+
+		res.render('pages/index', {
+			users: allUsers, // renders the playlists in dropdown (potentially subject to change)
+			songs: songLib,
+			playlists: [], //placeholder empty value will be updated later
+			overlay: showOverlay
+		});
+	});
+}
+
+app.get('/producer', function (req, res) {
+	const prom1 = userHandler.handleAllUsers(app, User, req.params.userID); // Promise gets data for single user
+	const prom2 = songHandler.handleAllSongs(app, Song); // Promise loads the left panel Song Library database
+
+	Promise.all([prom1, prom2]).then(arrayOfResolves => {
+		[users, songLibrary] = arrayOfResolves; // array destructuring creates variables containing each request result
+		const allUsers = JSON.parse(users);
+		const songLib = JSON.parse(songLibrary);
+
+		res.render('pages/index', {
+			users: allUsers, // renders the playlists in dropdown (potentially subject to change)
+			songs: songLib,
+			playlists: [], //placeholder empty value will be updated later
+			overlay: true
+		});
+	});
+	// const prom = userHandler.handleSingleUser(app, User, req.params.userID); // Promise gets data for single user
+
+})
+
+
+app.get('/producer/:userID', function(req, res) {
+	const prom1 = userHandler.handleAllUsers(app, User, req.params.userID); // Promise gets data for single user
+	const prom2 = songHandler.handleAllSongs(app, Song); // Promise loads the left panel Song Library database
+	// const prom = userHandler.handleSingleUser(app, User, req.params.userID); // Promise gets data for single user
+
+	Promise.all([prom1, prom2]).then(arrayOfResolves => {
+		[users, songLibrary] = arrayOfResolves; // array destructuring creates variables containing each request result
+		const allUsers = JSON.parse(users);
+		const songLib = JSON.parse(songLibrary);
+
+		res.render('pages/index', {
+			users: allUsers, // renders the playlists in dropdown (potentially subject to change)
+			songs: songLib,
+			playlists: [], //placeholder empty value will be updated later
+			overlay: false
+		});
+	});
+	
+	
+	console.log(req.params.userID);
+})
+
+
+const ProducerHandler = require('./server/handlers/ProducerHandler.js');
+
+
+app.route('/producer/:userID').post((req, res) => {
+	console.log(req.body.pListName, req.body.newData);
+	ProducerHandler.updateCurrPlaylist(req.params.userID, req.body.pListName, req.body.newData)
+		.then(() => {
+			console.log("POST fetch request");
+			
+			res.status(200).send("Playlist updated successfully");
+		})
+		.catch(err => {
+			console.error(err);
+			res.status(500).send("Error updating playlist");
+		});
+	djRender(req, res, false);
+});
+
+
+//* DJ Routes
+//...
+
+
+
+//* create a connection to database
 require('./server/handlers/dataConnector.js').connect();
 
 app.use(function (req, res, next) {

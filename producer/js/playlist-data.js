@@ -1,5 +1,6 @@
 // recall that const lets you change object properties just not the object reference
 const currDJ = { // Object maintains a temporary state of DJ data currently being edited
+	id: undefined,
 	name: undefined,
 
 	currPlaylist: undefined,
@@ -17,12 +18,28 @@ const currDJ = { // Object maintains a temporary state of DJ data currently bein
 	setPlist: function(array) { this.playlist.data[this.currPlaylist] = array}
 }
 
-const set = function setLocal(item, value) {
-	localStorage.setItem(item, value);
-}
-
-const get = function getLocal(item) {
-	return localStorage.getItem(item);
+async function updateDatabase() {
+	console.log("starting fetch request");
+	console.log();
+	await fetch(`/producer/${window.location.pathname.split('/').pop()}/`, {
+		method: 'POST',
+		mode: 'cors',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			id: currDJ.id,
+			pListName: currDJ.currPlaylist,
+			newData: currDJ.playlist
+		})
+	})
+	// .then(response => response.text())
+	.then(data => {
+		console.log("Fetch request successful");
+		console.log(data);
+		return data;
+	})
+	.catch(err => console.error(err));
 }
 
 function createPlaylist(name, data) {
@@ -56,6 +73,8 @@ function createPlaylist(name, data) {
 	currDJ.playlist.data[name] = [];
 
 	currDJ.currPlaylist = name; // global object will indicate the current playlist
+
+	updateDatabase();
 	
 	return true; // success
 }
@@ -66,6 +85,8 @@ function deletePlaylist() {
 		delete currDJ.playlist.data[currDJ.currPlaylist]; // removes the object property (key) from the list
 		currDJ.playlist.names = currDJ.playlist.names.filter(name => name != currDJ.currPlaylist);
 		currDJ.currPlaylist = undefined;
+
+		updateDatabase();
 
 		return true;
 	}
@@ -84,6 +105,8 @@ function renamePlaylist() {
 		currDJ.currPlaylist = ask;
 		currDJ.setPlist(storeData);
 
+		updateDatabase();
+
 		return true;
 	}
 }
@@ -94,6 +117,8 @@ function appendSong(id, name) {
 			id: id, 
 			name: name
 		});
+
+		updateDatabase();
 	}
 }
 
@@ -102,6 +127,8 @@ function removeSong(id) {
 	if (currDJ.getPlist()) {
 		newList = currDJ.getPlist().filter(song => song.id !== id);
 		currDJ.setPlist(newList);
+
+		updateDatabase();
 	}
 }
 
