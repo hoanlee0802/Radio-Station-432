@@ -50,26 +50,8 @@ const userHandler = require('./server/handlers/userHandler.js');
 
 
 //* Producer Routes
-// landing page with selectDJ option
-app.get('/producer', function (req, res) {
-	const prom1 = userHandler.handleAllUsers(app, User, req.params.userID); // Promise gets data for single user
-	const prom2 = songHandler.handleAllSongs(app, Song); // Promise loads the left panel Song Library database
-
-	Promise.all([prom1, prom2]).then(arrayOfResolves => {
-		[users, songLibrary] = arrayOfResolves; // array destructuring creates variables containing each request result
-		const allUsers = JSON.parse(users);
-		const songLib = JSON.parse(songLibrary);
-
-		res.render('pages/index', {
-			users: allUsers, // renders the playlists in dropdown (potentially subject to change)
-			songs: songLib,
-			playlists: [], //placeholder empty value will be updated later
-			overlay: true
-		});
-	});
-});
-
-function djRender(req, res, showOverlay) {
+// Renders data for the 
+function renderProd(req, res, showOverlay) {
 	const prom1 = userHandler.handleAllUsers(app, User, req.params.userID); // Promise gets data for single user
 	const prom2 = songHandler.handleAllSongs(app, Song); // Promise loads the left panel Song Library database
 
@@ -87,66 +69,36 @@ function djRender(req, res, showOverlay) {
 	});
 }
 
+// landing page with selectDJ option
 app.get('/producer', function (req, res) {
-	const prom1 = userHandler.handleAllUsers(app, User, req.params.userID); // Promise gets data for single user
-	const prom2 = songHandler.handleAllSongs(app, Song); // Promise loads the left panel Song Library database
-
-	Promise.all([prom1, prom2]).then(arrayOfResolves => {
-		[users, songLibrary] = arrayOfResolves; // array destructuring creates variables containing each request result
-		const allUsers = JSON.parse(users);
-		const songLib = JSON.parse(songLibrary);
-
-		res.render('pages/index', {
-			users: allUsers, // renders the playlists in dropdown (potentially subject to change)
-			songs: songLib,
-			playlists: [], //placeholder empty value will be updated later
-			overlay: true
-		});
-	});
-	// const prom = userHandler.handleSingleUser(app, User, req.params.userID); // Promise gets data for single user
-
-})
+	renderProd(req, res, true); // true shows DJ selection overlay
+});
 
 
+// Express needs to know that this is a valid path (we only care about the userID when we get a POST request from the client side i.e. from fetch())
 app.get('/producer/:userID', function(req, res) {
-	const prom1 = userHandler.handleAllUsers(app, User, req.params.userID); // Promise gets data for single user
-	const prom2 = songHandler.handleAllSongs(app, Song); // Promise loads the left panel Song Library database
-	// const prom = userHandler.handleSingleUser(app, User, req.params.userID); // Promise gets data for single user
-
-	Promise.all([prom1, prom2]).then(arrayOfResolves => {
-		[users, songLibrary] = arrayOfResolves; // array destructuring creates variables containing each request result
-		const allUsers = JSON.parse(users);
-		const songLib = JSON.parse(songLibrary);
-
-		res.render('pages/index', {
-			users: allUsers, // renders the playlists in dropdown (potentially subject to change)
-			songs: songLib,
-			playlists: [], //placeholder empty value will be updated later
-			overlay: false
-		});
-	});
+	// if this handler does not render anything, Express will keep our initial render from '/producer'
+	renderProd(req, res, false); // but need to include this render other wise the User ID won't be maintained in the URL
 	
-	
-	console.log(req.params.userID);
+	console.log(req.params.userID); // we can perform more actions here if desired, but for know we just log the userID
 })
 
 
 const ProducerHandler = require('./server/handlers/ProducerHandler.js');
 
-
+// handles post requests when there is a valid user ID in the URL
 app.route('/producer/:userID').post((req, res) => {
-	console.log(req.body.pListName, req.body.newData);
+	// console.log(req.body.pListName, req.body.newData); req.body contains data sent from fetch request in playlist-data.js
 	ProducerHandler.updateCurrPlaylist(req.params.userID, req.body.pListName, req.body.newData)
 		.then(() => {
-			console.log("POST fetch request");
-			
-			res.status(200).send("Playlist updated successfully");
+			// console.log("POST fetch received");
+			renderProd(req, res, false);
 		})
 		.catch(err => {
 			console.error(err);
 			res.status(500).send("Error updating playlist");
 		});
-	djRender(req, res, false);
+	
 });
 
 

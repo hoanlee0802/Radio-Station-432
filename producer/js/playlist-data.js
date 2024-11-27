@@ -19,8 +19,6 @@ const currDJ = { // Object maintains a temporary state of DJ data currently bein
 }
 
 async function updateDatabase() {
-	console.log("starting fetch request");
-	console.log();
 	await fetch(`/producer/${window.location.pathname.split('/').pop()}/`, {
 		method: 'POST',
 		mode: 'cors',
@@ -111,7 +109,7 @@ function renamePlaylist() {
 	}
 }
 
-function appendSong(id, name) {
+function pushSong(id, name) {
 	if (currDJ.currPlaylist != undefined) {
 		currDJ.getPlist().push({
 			id: id, 
@@ -136,4 +134,4 @@ function loadSongs() {
 	return currDJ.currPlaylist ? currDJ.getPlist() : [];
 }
 
-export {currDJ, createPlaylist, deletePlaylist, renamePlaylist, appendSong, removeSong, loadSongs};
+export {currDJ, createPlaylist, deletePlaylist, renamePlaylist, pushSong, removeSong, loadSongs};

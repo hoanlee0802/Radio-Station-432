@@ -21,10 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
 			songCopy.innerHTML = ref.innerHTML;
 			
 			songCopy.querySelector('i').textContent = ''; // ensure pause button is not duplicated
-			songCopy.querySelector('.right').textContent = ''; // 2change add_circle to cancel
+			songCopy.querySelector('.right').textContent = ''; // ensure add_circle is not duplicated
 
 			// before adding text content of list element, empty the list element except for main song text
-			dj.appendSong(songCopy.getAttribute('data-id'), songCopy.textContent);
+			dj.pushSong(songCopy.getAttribute('data-id'), songCopy.textContent.trim()); // .trim() removes invisible whitespace characters
 
 			songCopy.querySelector('i').textContent = 'play_arrow'; // ensure pause button is not duplicated
 			songCopy.querySelector('.right').textContent = 'cancel'; // change add_circle to cancel

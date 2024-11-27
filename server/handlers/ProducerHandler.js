@@ -6,19 +6,18 @@ const updateCurrPlaylist = (userID, listName, newData) => {
         User.findById(userID)
             .then(user => {
                 if (!user) {
-                    console.error("User not found");
+                    // console.error("User not found");
                     return reject(new Error("User not found"));
                 }
                 user.currPlaylist = listName;
                 user.playlists = newData;
-                console.log("Updated database");
                 return user.save();
             })
             .then(() => {
-                resolve("Playlist updated successfully");
+                resolve("Playlist updated successfully"); // Note: this message will not show up in terminal
             })
             .catch(err => {
-                console.error("Error updating playlists", err);
+				// console.error("Error updating playlists", err);
                 reject(new Error("Error updating playlists"));
             });
     });

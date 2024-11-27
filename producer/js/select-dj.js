@@ -67,9 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		e.preventDefault();
 		getSessionData(selected.text);
 
-		console.log(selected.getAttribute('data-id'));
-		window.location.href = selected.getAttribute('data-id');
-		console.log(window.location.href);
+		window.location.pathname = `/producer/${selected.getAttribute('data-id')}`;
 
 		listDJs(); // this will hide the DJ list
 	});
