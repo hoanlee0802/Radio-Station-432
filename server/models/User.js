@@ -1,11 +1,11 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const { Song } = require(__dirname + '/Song.js');
 
 const userSchema = new mongoose.Schema({
-  id: Number,
   name: String,
   currPlaylist: String,
   playlists: {
-    names: Array,
+    names: [{ type: String }],
     data: {
       //* Example of how the data will look (will contain an indefinite amount of playlists):
       // "playlistName": [

@@ -26,12 +26,13 @@
 </head>
 
 <body>
-	<%- include('../partials/header') %>\
+	<%- include('../partials/header') %>
 	<div id="selectDJ" class=" <%if(!overlay){%> hide <%}%> ">
 		<%- include('../partials/selectDJ'); %>
 	</div>
 	<aside id="sidebar">
-		<div class="profile" onclick="window.location = '../group10.html'">
+		<!-- Clicking the profile image takes the user directly to the home page without any cookie-clearing logout procedure -->
+		<div class="profile" onclick="window.location = '/'">
 			<img src="../profile-pic.png" alt="Profile Picture">
 			<p>User1</p>
 		</div>
@@ -42,7 +43,7 @@
 				<li><a href="#">Feature 3</a></li>
 			</ul>
 		</nav>
-		<button class="signout" onclick="window.location.href = '../group10.html'">Sign out</button>
+		<button class="signout" onclick="window.location.pathname = '/producer/logout'">Sign out</button>
 	</aside>
 	<main>
 		<section class="left">

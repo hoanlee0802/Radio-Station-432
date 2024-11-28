@@ -1,6 +1,6 @@
 import { _el } from '../../global.js';
 import * as dj from './playlist-data.js';
-import * as profiles from './user-profile.js';
+// import * as profiles from './user-profile.js';
 import { DJProfile } from './user-profile.js';
 import { updatePlaylists, songsUI } from './playlist-events.js';
 
@@ -10,24 +10,22 @@ function listDJs() {
 
 let find;
 
-function getSessionData(name) {
-	find = profiles.all.find(obj => obj.name == name);
-	if (find) {
-		dj.currDJ.currPlaylist = find.getOnPlaylist();
-		dj.currDJ.playlist = find.getPlaylists();
-	} else {
-		const profile = new DJProfile(name, {names: [], data: {}}, undefined);
-		find = profile;
-		
-		profiles.all.push(profile);
+async function getSessionData(name) {
+	try {
+		console.log("Fetching session data for:", name);
+		const user = await dj.getAllData(); // Ensure this is awaited
+		console.log("Fetched user data:", user);
 
-		dj.currDJ.currPlaylist = undefined;
-		dj.currDJ.playlist = {names: [], data: {}};
+		dj.currDJ.currPlaylist = user.currPlaylist; // Corrected line
+		dj.currDJ.playlist = user.playlists;
+		find = user.playlists;
+
+		dj.currDJ.name = name;
+		updatePlaylists(dj.currDJ.currPlaylist); // providing name parameter looks for match
+		songsUI();
+	} catch (error) {
+		console.error("ERROR", error);
 	}
-
-	dj.currDJ.name = name;
-	updatePlaylists(dj.currDJ.currPlaylist); // providing name parameter looks for match
-	songsUI();
 }
 
 function setSessionData() {
@@ -65,9 +63,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	confirmBtn.addEventListener('submit', function(e) {
 		e.preventDefault();
-		getSessionData(selected.text);
+		// very important that we put the ID in teh url before getting session data
+		if (window.location.pathname.split('/').pop() == '') { // check if ID is set in URL yet
+			window.location.pathname = `/producer/${selected.getAttribute('data-id')}`;
 
-		window.location.pathname = `/producer/${selected.getAttribute('data-id')}`;
+		}
+
+		getSessionData(selected.text);
+		
 
 		listDJs(); // this will hide the DJ list
 	});
