@@ -1,5 +1,5 @@
 // recall that const lets you change object properties just not the object reference
-const currDJ = { // Object maintains a temporary state of DJ data currently being edited
+let currDJ = { // Object maintains a temporary state of DJ data currently being edited
 	id: undefined,
 	name: undefined,
 
@@ -16,6 +16,25 @@ const currDJ = { // Object maintains a temporary state of DJ data currently bein
 	},
 	getPlist: function() { return this.playlist.data[this.currPlaylist]},
 	setPlist: function(array) { this.playlist.data[this.currPlaylist] = array}
+}
+
+
+async function getAllData() {
+	console.log("Fetching all data from:", window.location.pathname);
+	const response = await fetch(window.location.pathname, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		}
+	});
+	console.log("Response status:", response.status);
+	if (!response.ok) {
+		throw new Error(`HTTP error! status: ${response.status}`);
+	}
+	const data = await response.json();
+	console.log("Fetched data:", data);
+	return data;
 }
 
 // sends an HTTP Method request at the current URL of /producer/{userID}
@@ -45,7 +64,7 @@ async function playlistDB(action) {
 		})
 	})
 	.then(data => {
-		console.log("Fetch request successful", data);
+		// console.log("Fetch request successful", data);
 		return data;
 	})
 	.catch(err => console.error(err));
@@ -148,4 +167,14 @@ function loadSongs() {
 	return currDJ.currPlaylist ? currDJ.getPlist() : [];
 }
 
-export { currDJ, createPlaylist, deletePlaylist, renamePlaylist, pushSong, removeSong, loadSongs, playlistDB };
+export {
+    currDJ,
+    createPlaylist,
+    deletePlaylist,
+    renamePlaylist,
+    pushSong,
+    removeSong,
+    loadSongs,
+    playlistDB,
+    getAllData
+};

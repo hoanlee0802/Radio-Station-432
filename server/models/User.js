@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { Song } = require(__dirname + '/Song.js');
 
 const userSchema = new mongoose.Schema({
-	id: Number,
+	// The Object _id should not be included in the Schema but can be implicitly referenced with ["_id"] in EJS without attribute quotes
 	name: String,
 	currPlaylist: String,
 	playlists: {

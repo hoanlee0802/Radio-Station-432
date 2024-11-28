@@ -87,12 +87,18 @@ app.get('/producer/:userID', function(req, res) {
 const ProducerHandler = require('./server/handlers/ProducerHandler.js');
 
 function handleFetchRequest(req, res, action, funcName) {
-	// console.log(req.body.pListName, req.body.newData); req.body contains data sent from fetch request in playlist-data.js
+	console.log(`Handling ${action} request for function ${funcName}`);
+	console.log("Request params:", req.params);
+	console.log("Request body:", req.body);
 	ProducerHandler[funcName](req.params.userID, req.body.pListName, req.body.newData)
-		.then(() => {
+		.then((data) => {
 			console.log(`${action} fetch received`);
-			res.status(200).send('Received fetch request');
-			// renderProd(req, res, false);
+			if (action == 'GET') {
+				console.log("Sending data:", data);
+				res.status(200).json(data);
+			} else {
+				res.status(200).send('Received fetch request');
+			}
 		})
 		.catch(err => {
 			console.error(err);
@@ -100,7 +106,7 @@ function handleFetchRequest(req, res, action, funcName) {
 		});
 }
 
-// handles post requests when there is a valid user ID in the URL
+// handles server requests when there is a valid user ID in the URL, and a client-side fetch request is made
 app.route('/producer/:userID').put((req, res) => {
 	handleFetchRequest(req, res, 'update PUT', 'updateCurrPlaylist');
 
@@ -110,7 +116,10 @@ app.route('/producer/:userID').put((req, res) => {
 }).delete((req, res) => {
 	handleFetchRequest(req, res, 'DELETE', 'deletePlaylist')
 
-});
+}).get((req, res) => {
+	handleFetchRequest(req, res, 'GET', 'getPlaylists'); // GET should only be needed once on page load
+
+})
 
 
 //* DJ Routes
