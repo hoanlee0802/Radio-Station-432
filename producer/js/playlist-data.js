@@ -4,7 +4,7 @@ let currDJ = { // Object maintains a temporary state of DJ data currently being 
 	name: undefined,
 
 	currPlaylist: undefined,
-	playlist: {
+	playlists: {
 		names: [],
 		data: {
 			// Example of how the data will look:
@@ -14,28 +14,10 @@ let currDJ = { // Object maintains a temporary state of DJ data currently being 
 			// ]
 		}
 	},
-	getPlist: function() { return this.playlist.data[this.currPlaylist]},
-	setPlist: function(array) { this.playlist.data[this.currPlaylist] = array}
+	getPlist: function() { return this.playlists.data[this.currPlaylist]},
+	setPlist: function(array) { this.playlists.data[this.currPlaylist] = array}
 }
 
-
-async function getAllData() {
-	console.log("Fetching all data from:", window.location.pathname);
-	const response = await fetch(window.location.pathname, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			'Accept': 'application/json'
-		}
-	});
-	console.log("Response status:", response.status);
-	if (!response.ok) {
-		throw new Error(`HTTP error! status: ${response.status}`);
-	}
-	const data = await response.json();
-	console.log("Fetched data:", data);
-	return data;
-}
 
 // sends an HTTP Method request at the current URL of /producer/{userID}
 async function playlistDB(action) {
@@ -72,7 +54,7 @@ async function playlistDB(action) {
 
 
 function createPlaylist(name, data) {
-	let playlist = currDJ.playlist;
+	let playlist = currDJ.playlists;
 
 	if (name == undefined) {
 		let num = 1;
@@ -98,8 +80,8 @@ function createPlaylist(name, data) {
 			name = newName; // othewise name is newName
 		}
 	}
-	currDJ.playlist.names.push(name);
-	currDJ.playlist.data[name] = [];
+	currDJ.playlists.names.push(name);
+	currDJ.playlists.data[name] = [];
 
 	currDJ.currPlaylist = name; // global object will indicate the current playlist
 
@@ -113,8 +95,8 @@ function deletePlaylist() {
 	if (check && currDJ.getPlist()) {
 		playlistDB('delete'); // delete from database before deleting locally (need to ref. currPlaylist)
 
-		delete currDJ.playlist.data[currDJ.currPlaylist]; // removes the object property (key) from the list
-		currDJ.playlist.names = currDJ.playlist.names.filter(name => name != currDJ.currPlaylist);
+		delete currDJ.playlists.data[currDJ.currPlaylist]; // removes the object property (key) from the list
+		currDJ.playlists.names = currDJ.playlists.names.filter(name => name != currDJ.currPlaylist);
 		currDJ.currPlaylist = undefined;
 
 		return true;
@@ -126,11 +108,11 @@ function renamePlaylist() {
 	const ask = prompt(`What would you like to rename the playlist "${currDJ.currPlaylist}"?`);
 
 	if (ask) {
-		const index = currDJ.playlist.names.indexOf(label);
-		currDJ.playlist.names[index] = ask;
+		const index = currDJ.playlists.names.indexOf(label);
+		currDJ.playlists.names[index] = ask;
 
 		const storeData = currDJ.getPlist();
-		delete currDJ.playlist.data[currDJ.currPlaylist];
+		delete currDJ.playlists.data[currDJ.currPlaylist];
 		currDJ.currPlaylist = ask;
 		currDJ.setPlist(storeData);
 
@@ -164,7 +146,7 @@ function removeSong(id) {
 }
 
 function loadSongs() {
-	return currDJ.currPlaylist ? currDJ.getPlist() : [];
+	return (currDJ.currPlaylist ? currDJ.getPlist() : []);
 }
 
 export {
@@ -175,6 +157,5 @@ export {
     pushSong,
     removeSong,
     loadSongs,
-    playlistDB,
-    getAllData
+    playlistDB
 };

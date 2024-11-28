@@ -37,14 +37,14 @@ function updatePlaylists(match) {
 	select.textContent = ''; // empty the select Element
 	let opt = createOption('Select Playlist', 'select');
 	opt.selected = true; // Sets the default no playlist selected option
-	if (dj.currDJ.playlist.names.length > 0 && dj.currDJ.currPlaylist != undefined)
+	if (dj.currDJ.playlists.names.length > 0 && dj.currDJ.currPlaylist != undefined)
 		_el('table').classList.remove('disabled');
 	else {
 		_el('.playlist-info').style.display = 'block';
 		_el('table').classList.add('disabled');
 	}
 	
-	dj.currDJ.playlist.names.forEach(function (name) {
+	dj.currDJ.playlists.names.forEach(function (name) {
 		opt = createOption(name);
 		if (match) {
 			if (match == name) {

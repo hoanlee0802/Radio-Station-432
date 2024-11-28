@@ -18,11 +18,15 @@
 		}
 	</style>
 	<script>
+		/* JSON stringify required when assigning database values with JavaScript */
+		window.userData = <%- JSON.stringify(userData) %>;
+
+
 		function showSidebar() {
 			const sidebar = document.querySelector('#sidebar');
 			sidebar.classList.toggle('show');
 		}
-	</script>
+		</script>
 </head>
 
 <body>

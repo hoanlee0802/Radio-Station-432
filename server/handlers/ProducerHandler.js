@@ -80,29 +80,9 @@ const deletePlaylist = (userID, listName) => {
 
 const userHandler = require('./userHandler.js');
 
-const getPlaylists = (userID) => {
-	return new Promise((resolve, reject) => {
-		console.log("Fetching playlists for user ID:", userID);
-		User.findById(userID)
-			.then(user => {
-				if (!user) {
-					console.error("User not found");
-					return reject(new Error("User not found"));
-				}
-				console.log("User found:", user);
-				return resolve({
-					playlists: user.playlists
-				});
-			})
-			.catch((err) => {
-				console.error("Error fetching user:", err);
-				reject(err);
-			})
-	});
-}
+
 module.exports = {
     updateCurrPlaylist,
 	createPlaylist,
-	deletePlaylist,
-	getPlaylists
+	deletePlaylist
 }

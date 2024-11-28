@@ -8,30 +8,28 @@ function listDJs() {
 	_el('#selectDJ').classList.toggle('hide');
 }
 
+let currID; // this will store the current ID, which is also stored in the browser URL
+
 let find;
 
 async function getSessionData(name) {
-	try {
-		console.log("Fetching session data for:", name);
-		const user = await dj.getAllData(); // Ensure this is awaited
-		console.log("Fetched user data:", user);
+	// dj.currDJ = { ...userData }; // setting the entire currDJ object did not work
+	let user = window.userData;
+	dj.currDJ.id = user['_id']; // We do not actually use the stored id in currDJ for now
 
-		dj.currDJ.currPlaylist = user.currPlaylist; // Corrected line
-		dj.currDJ.playlist = user.playlists;
-		find = user.playlists;
+	dj.currDJ.name = user.name;
+	dj.currDJ.currPlaylist = user.currPlaylist;
+	dj.currDJ.playlists = user.playlists;
+	console.log(dj.currDJ);
 
-		dj.currDJ.name = name;
-		updatePlaylists(dj.currDJ.currPlaylist); // providing name parameter looks for match
-		songsUI();
-	} catch (error) {
-		console.error("ERROR", error);
-	}
+	updatePlaylists(dj.currDJ.currPlaylist);
+	songsUI();
 }
 
 function setSessionData() {
 	if (find) {
 		find.setOnPlaylist(dj.currDJ.currPlaylist);
-		find.setPlaylists(dj.currDJ.playlist);
+		find.setPlaylists(dj.currDJ.playlists);
 	}
 	
 	songsUI();
@@ -39,6 +37,9 @@ function setSessionData() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
+	getSessionData(); // Will work fine whether or not there is a user ID in the URL
+
+
 	const confirmBtn = _el('#selectDJ form');
 	const listDJ = _el('header span.right');
 
@@ -63,16 +64,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	confirmBtn.addEventListener('submit', function(e) {
 		e.preventDefault();
-		// very important that we put the ID in teh url before getting session data
-		if (window.location.pathname.split('/').pop() == '') { // check if ID is set in URL yet
-			window.location.pathname = `/producer/${selected.getAttribute('data-id')}`;
+		currID = selected.getAttribute('data-id');
 
-		}
-
-		getSessionData(selected.text);
-		
-
-		listDJs(); // this will hide the DJ list
+		window.location.pathname = `/producer/${currID}`;
 	});
 	
 	listDJ.addEventListener('click', function() {
