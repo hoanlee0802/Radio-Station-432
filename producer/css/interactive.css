@@ -28,7 +28,7 @@
 /* The sidebar is hidden by default */
 aside#sidebar {
     position: fixed;
-    z-index: 10;
+    z-index: 25; /* Ensure sidebar is always accessible even if there is an overlay */
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.25);
     left: -250px;
     opacity: 0;
@@ -86,6 +86,6 @@ table.disabled button {
 }
 
 
-.right ul {
+.left ul, .right ul {
     padding-bottom: 50px; /* Accounts for the Playlist action buttons edit/delete */
 }

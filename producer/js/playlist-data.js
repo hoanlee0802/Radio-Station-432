@@ -20,7 +20,7 @@ let currDJ = { // Object maintains a temporary state of DJ data currently being 
 
 
 // sends an HTTP Method request at the current URL of /producer/{userID}
-async function playlistDB(action) {
+async function playlistDB(action, reName) {
 	let HTTPmethod = 'GET'; // no valid action specified assumes GET
 	let useData = false;
 	switch (action) {
@@ -33,6 +33,9 @@ async function playlistDB(action) {
 		case 'delete':
 			HTTPmethod = 'DELETE';
 			break;
+		case 'rename':
+			HTTPmethod = 'PATCH';
+			break;
 	}
 	await fetch(window.location.pathname, {
 		method: HTTPmethod,
@@ -42,11 +45,10 @@ async function playlistDB(action) {
 		body: JSON.stringify({
 			id: currDJ.id,
 			pListName: currDJ.currPlaylist,
-			newData: useData ? currDJ.getPlist() : undefined // stringify will automatically remove undefined properties
+			newData: useData ? currDJ.getPlist() : reName // stringify will automatically remove undefined properties (i.e. if reName is not specified)
 		})
 	})
-	.then(data => {
-		// console.log("Fetch request successful", data);
+	.then(data => { // console.log("Fetch request successful", data);
 		return data;
 	})
 	.catch(err => console.error(err));
@@ -105,9 +107,14 @@ function deletePlaylist() {
 
 function renamePlaylist() {
 	const label = currDJ.currPlaylist;
-	const ask = prompt(`What would you like to rename the playlist "${currDJ.currPlaylist}"?`);
+	const ask = prompt(`What would you like to rename the playlist "${currDJ.currPlaylist}"?`).trim();
 
 	if (ask) {
+		if (currDJ.playlists.names.includes(ask)) {
+			alert("That name already exists.");
+			return false;
+		}
+
 		const index = currDJ.playlists.names.indexOf(label);
 		currDJ.playlists.names[index] = ask;
 
@@ -116,7 +123,7 @@ function renamePlaylist() {
 		currDJ.currPlaylist = ask;
 		currDJ.setPlist(storeData);
 
-		playlistDB('update');
+		playlistDB('rename', ask);
 
 		return true;
 	}

@@ -37,9 +37,10 @@ function updatePlaylists(match) {
 	select.textContent = ''; // empty the select Element
 	let opt = createOption('Select Playlist', 'select');
 	opt.selected = true; // Sets the default no playlist selected option
-	if (dj.currDJ.playlists.names.length > 0 && dj.currDJ.currPlaylist != undefined)
+	if (dj.currDJ.playlists.names.length > 0 && dj.currDJ.currPlaylist != undefined) {
 		_el('table').classList.remove('disabled');
-	else {
+		_el('.playlist-info').style.display = 'none';
+	} else {
 		_el('.playlist-info').style.display = 'block';
 		_el('table').classList.add('disabled');
 	}
@@ -74,21 +75,23 @@ function songsUI() {
 		const songs = dj.loadSongs();
 		
 		songList.textContent = '';
-		songs.forEach(function (song) {
-			// const li = document.createElement('li');
-			const element = `
+		if (songs) {
+			songs.forEach(function (song) {
+				// const li = document.createElement('li');
+				const element = `
 			<li class="song" data-id="${song.id}">
 				<i class="material-symbols-outlined">play_arrow</i>
 				${song.name}
 				<i class="material-symbols-outlined right">cancel</i>
 			</li>`;
 
-			// this line querySelector line makes sure that 
-			_el(`section.left ul li[data-id="${song.id}"]`).classList.add('added');
+				// this line querySelector line makes sure that 
+				_el(`section.left ul li[data-id="${song.id}"]`).classList.add('added');
 
-			songList.innerHTML += element;
+				songList.innerHTML += element;
 
-		})
+			})
+		}
 	}
 
 	clearAddedCSS();
