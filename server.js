@@ -4,6 +4,18 @@ const bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
 
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+const session = require('express-session'); // enable session cookies
+// configure session middleware
+app.use(session({
+	secret: process.env.SESSION_SECRET,
+	saveUninitialized: false,
+	resave: false,
+	cookie: { secure: false, httpOnly: true, secure: process.env.NODE_ENV === 'production' } // session state across routes only works in production mode
+}));
+
 app.use(bodyParser.json());
 
 // Global Static Files currently in same directory as server file:
@@ -13,6 +25,7 @@ app.use(express.static(__dirname));
 app.set('view engine', 'ejs');
 
 // Each Role Static Files:
+app.use('/', express.static(__dirname)); // static files for the home page at top directory
 app.use('/producer', express.static(__dirname + '/producer'));
 // app.use(...);
 // app.use(...);
@@ -21,6 +34,7 @@ app.use('/producer', express.static(__dirname + '/producer'));
 
 // Each Role Views
 app.set('views', [
+	__dirname + '/views', // view for the home page
 	__dirname + '/producer/views'
 	// ...
 	// ...
@@ -28,15 +42,15 @@ app.set('views', [
 
 // res.render loads up an ejs view file
 
-app.set('/', function(req, res) {
-	res.render(/* Our group 10 EJS file when it exists */);
+app.get('/', function(req, res) {
+	res.render('pages/group10');
 });
 
 // tell node to use json and HTTP header features in body-parser
 app.use(express.urlencoded({ extended: true }));
 
-const Song = require('./server/models/Song');
-const User = require('./server/models/User');
+const Song = require('./server/models/Song.js');
+const User = require('./server/models/User.js');
 
 const songHandler = require('./server/handlers/songLibraryHandler.js');
 const userHandler = require('./server/handlers/userHandler.js');
@@ -50,7 +64,6 @@ const userHandler = require('./server/handlers/userHandler.js');
 
 
 //* Producer Routes
-// Renders data for the 
 function renderProd(req, res, showOverlay) {
 	const prom1 = userHandler.handleAllUsers(app, User, req.params.userID); // Promise gets data for single user
 	const prom2 = songHandler.handleAllSongs(app, Song); // Promise loads the left panel Song Library database
@@ -71,18 +84,42 @@ function renderProd(req, res, showOverlay) {
 
 // landing page with selectDJ option
 app.get('/producer', function (req, res) {
-	renderProd(req, res, true); // true shows DJ selection overlay
+	// console.log(req.session.viewingDJ);
+
+	// the following will only redirect if the user has not logged out of the session, otherwise session.viewingDJid will be undefined:
+	// if (req.session.viewingDJ) // the cookie will only exist if the user opened a DJ view and hasn't logged out
+	// 	res.redirect(`/producer/${req.session.viewingDJ}`); // take the user back to their last viewing DJ instead of the select DJ landing page
+
+	if (req.cookies.viewingDJ) // the cookie will only exist if the user opened a DJ view and hasn't logged out
+		res.redirect(`/producer/${req.cookies.viewingDJ}`); // take the user back to their last viewing DJ instead of the select DJ landing page
+	else
+		renderProd(req, res, true); // true shows DJ selection overlay
+	
 });
+
+
+app.get('/producer/logout', function (req, res) {
+	res.clearCookie('viewingDJ'); // remove cookie of last viewed DJ's ID
+	res.redirect('/'); // now take the user to the home page
+})
+
 
 
 // Express needs to know that this is a valid path (we only care about the userID when we get a POST request from the client side i.e. from fetch())
 app.get('/producer/:userID', function(req, res) {
 	// if this handler does not render anything, Express will keep our initial render from '/producer'
-	renderProd(req, res, false); // but need to include this render other wise the User ID won't be maintained in the URL
-	
-	console.log(req.params.userID); // we can perform more actions here if desired, but for know we just log the userID
-})
 
+	// req.session.viewingDJ = req.params.userID; // store the cookie with the last viewed DJ ID to load the next time '/producer' view is opened
+	res.cookie('viewingDJ', req.params.userID); // store the cookie with the last viewed DJ ID to load the next time '/producer' view is opened
+	// console.log(req.session.viewingDJ);
+
+	
+	renderProd(req, res, false); // but need to include this render other wise the User ID won't be maintained in the URL
+
+	
+	
+	// console.log(req.params.userID); // we can perform more actions here if desired, but for now we just log the userID
+})
 
 const ProducerHandler = require('./server/handlers/ProducerHandler.js');
 
