@@ -57,19 +57,20 @@ async function playlistDB(action, reName) {
 
 function createPlaylist(name, data) {
 	let playlist = currDJ.playlists;
+	let listName = name;
 
-	if (name == undefined) {
+	if (!name) {
 		let num = 1;
 		let checked = `Playlist ${num}`;
 		while (playlist.names.includes(checked)) {
 			num++;
 			checked = `Playlist ${num}`;
 		}
-		name = checked; // name is now verified
+		listName = checked; // name is now verified
 	} else {
-		name = prompt("Enter Playlist Name");
-		if (name == undefined) return false; // user cancelled the prompt
-		if (playlist.names.includes(name) || name.trim() == '') {
+		listName = prompt("Enter Playlist Name");
+		if (listName == undefined) return false; // user cancelled the prompt
+		if (playlist.names.includes(listName) || listName.trim() == '') {
 			let newName = prompt(`Name already used/invalid.`).trim();
 			while (newName) {
 				if (playlist.names.includes(newName) || newName.trim() == '')
@@ -79,13 +80,13 @@ function createPlaylist(name, data) {
 			}
 			if (!newName)
 				return false; // PlayList Creation Aborted
-			name = newName; // othewise name is newName
+			listName = newName; // othewise name is newName
 		}
 	}
-	currDJ.playlists.names.push(name);
-	currDJ.playlists.data[name] = [];
+	currDJ.playlists.names.push(listName);
+	currDJ.playlists.data[listName] = [];
 
-	currDJ.currPlaylist = name; // global object will indicate the current playlist
+	currDJ.currPlaylist = listName; // global object will indicate the current playlist
 
 	playlistDB('create');
 	
@@ -130,7 +131,7 @@ function renamePlaylist() {
 }
 
 function pushSong(id, name) {
-	if (currDJ.currPlaylist != undefined) {
+	if (currDJ.currPlaylist && currDJ.getPlist()) {
 		currDJ.getPlist().push({
 			id: id, 
 			name: name
@@ -138,6 +139,8 @@ function pushSong(id, name) {
 		console.log(`current playlist: ${currDJ.currPlaylist}`);
 
 		playlistDB('update');
+	} else {
+		createPlaylist();
 	}
 }
 

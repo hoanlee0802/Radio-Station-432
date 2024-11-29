@@ -1,7 +1,6 @@
 import { _el } from '../../global.js';
 import * as dj from './playlist-data.js';
-// import * as profiles from './user-profile.js';
-import { DJProfile } from './user-profile.js';
+
 import { updatePlaylists, songsUI } from './playlist-events.js';
 
 function listDJs() {
@@ -13,13 +12,16 @@ let currID; // this will store the current ID, which is also stored in the brows
 let find;
 
 async function getSessionData(name) {
-	// dj.currDJ = { ...userData }; // setting the entire currDJ object did not work
 	let user = window.userData;
 	dj.currDJ.id = user['_id']; // We do not actually use the stored id in currDJ for now
 
 	dj.currDJ.name = user.name;
 	dj.currDJ.currPlaylist = user.currPlaylist;
-	dj.currDJ.playlists = user.playlists;
+
+	// Ensure data is initialized (in case of anomolous database values like null or undefined):
+	dj.currDJ.playlists.names = user.playlists.names || [];
+	dj.currDJ.playlists.data = user.playlists.data || {};
+
 	console.log(dj.currDJ);
 
 	updatePlaylists(dj.currDJ.currPlaylist);
