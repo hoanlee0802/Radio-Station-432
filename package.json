@@ -7,5 +7,16 @@
     "express": "^4.21.1",
     "express-session": "^1.18.1",
     "mongoose": "^8.8.2"
-  }
+  },
+  "name": "radio-station-432",
+  "version": "1.0.0",
+  "description": "Git Collaboration Guidelines: https://vasiluca.notion.site/How-to-Use-Git-118a1e8916a2807fa2fccb71820a29be?pvs=4",
+  "main": "global.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
