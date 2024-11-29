@@ -54,7 +54,7 @@ module.exports = function(app) {
 			// console.log("USER DATA", userData);
 			return userData;
 		}).then((loadUser) => {
-			renderProd(req, res, false, loadUser); // but need to include this render other wise the User ID won't be maintained in the URL
+			renderProd(req, res, false, loadUser); // need to include this render
 		})
 			.catch(err => {
 				res.clearCookie('viewingDJ'); // this will clear the cookie to prevent redirecting to an invalid user at /producer/userID
@@ -100,7 +100,7 @@ module.exports = function(app) {
 		handleFetchRequest(req, res, 'DELETE', 'deletePlaylist')
 
 	}).patch((req, res) => {
-		handleFetchRequest(req, res, 'rename PATCH', 'renameCurrPlaylist')
+		// handleFetchRequest(req, res, 'rename PATCH', 'renameCurrPlaylist')
 
 	})
 }

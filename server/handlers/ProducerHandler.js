@@ -4,25 +4,21 @@ const User = require('../models/User');
 
 const updateCurrPlaylist = (userID, listName, newData) => {
     return new Promise((resolve, reject) => {
-        User.findById(userID)
-            .then(user => {
-                if (!user) {
-                    // console.error("User not found");
-                    return reject(new Error("User not found"));
-                }
-                user.currPlaylist = listName;
-                user.playlists.data[listName] = newData;
-
-				user.markModified(`playlists.data.${listName}`); // by default MongoDB does not check sub-properties
-                return user.save();
-            })
-            .then(() => {
-                resolve("Playlist updated successfully"); // Note: this message will not show up in terminal
-            })
-            .catch(err => {
-				// console.error("Error updating playlists", err);
-                reject(new Error("Error updating playlists"));
-            });
+		User.updateOne( // .updateOne() will guarantee that there is no version conflict (concurrency) when updating a playlist with added song after auto-creating playlist
+			{ _id: userID },
+			{
+				$set: {
+					currPlaylist: listName,
+					[`playlists.data.${listName}`]: newData
+				}
+			}
+		).then(() => {
+			resolve("Playlist updated successfully"); // Note: this message will not show up in terminal
+		})
+		.catch(err => {
+			// console.error("Error updating playlists", err);
+			reject(new Error(`Error updating playlists \n	${err}`));
+		});
     });
 }
 
@@ -51,6 +47,7 @@ const renameCurrPlaylist = (userID, oldName, newName) => {
 				return user.save();
 			})
 			.then(() => {
+				console.log("Successful rename");
 				resolve("Playlist renamed successfully"); // Note: this message will not show up in terminal
 			})
 			.catch(err => {
@@ -74,6 +71,8 @@ const createPlaylist = (userID, listName) => {
 					new Error("Playlist already exists"); return;
 				}
 
+				if (!user.playlists.data) user.playlists.data = {};
+
 				user.playlists.data[listName] = []; // initializes empty object for that playlist
 
 				user.markModified(`playlists.data.${listName}`);
@@ -84,7 +83,7 @@ const createPlaylist = (userID, listName) => {
 				resolve("Playlist created successfuly");
 			})
 			.catch((err) => {
-				reject(new Error("Error creating playlist"));
+				reject(new Error(`Error creating playlist: \n	${err}`,));
 			})
 	})
 }
@@ -110,7 +109,7 @@ const deletePlaylist = (userID, listName) => {
 				resolve("Playlist deleted successfuly");
 			})
 			.catch(() => {
-				reject(new Error("Error deleting playlist"))
+				reject(new Error(`Error deleting playlist: \n${err}`))
 			})
 	});
 }

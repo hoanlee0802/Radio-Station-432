@@ -139,8 +139,6 @@ function pushSong(id, name) {
 		console.log(`current playlist: ${currDJ.currPlaylist}`);
 
 		playlistDB('update');
-	} else {
-		createPlaylist();
 	}
 }
 

@@ -13,7 +13,7 @@ let find;
 
 async function getSessionData(name) {
 	let user = window.userData;
-	dj.currDJ.id = user['_id']; // We do not actually use the stored id in currDJ for now
+	dj.currDJ.id = user['_id'];
 
 	dj.currDJ.name = user.name;
 	dj.currDJ.currPlaylist = user.currPlaylist;
