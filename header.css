@@ -1,0 +1,40 @@
+header {
+    height: 55px;
+    /* This ensures text is vertically aligned */
+    line-height: 55px;
+
+    text-align: center;
+    background: cornflowerblue;
+
+    color: white;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+header span {
+    display: block;
+    height: 45px;
+    line-height: 45px;
+
+    width: 45px;
+    position: fixed;
+    top: 5px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.8);
+
+    color: black;
+    line-height: 45px;
+}
+
+header span i {
+    padding-top: 10px;
+    /* vertical-align: middle; /*doesn't working here*/
+}
+
+header span.left {
+    left: 5px;
+}
+
+header span.right {
+    right: 5px;
+}
