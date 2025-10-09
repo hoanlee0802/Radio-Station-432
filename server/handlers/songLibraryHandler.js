@@ -7,7 +7,8 @@ const handleAllSongs = (app, Song) => {
 				resolve(JSON.stringify(data));
 			})
 			.catch(err => {
-				reject(new Error('Unable to connect to Song Library'));
+				console.error('Unable to connect to Song Library: \n', err);
+				resolve(JSON.stringify([]));
 				// return { message: "Unable to connect to Song Library" }
 			})
 	})

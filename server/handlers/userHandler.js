@@ -6,7 +6,8 @@ const handleAllUsers = (app, User) => {
 				resolve(JSON.stringify(data));
 			})
 			.catch(err => {
-				reject(new Error('Unable to connect to retrieve Users'));
+				console.error("Unable to connect to retrieve Users: \n", err);
+				resolve(JSON.stringify([]));
 			})
 	})
 }
@@ -18,7 +19,8 @@ const handleSingleUser = (app, User, id) => {
 				resolve(JSON.stringify(data));
 			})
 			.catch(err => {
-				reject(new Error('Unable to connect to retrieve User'));
+				console.error("Unable to connect to retrieve User: \n", err);
+				resolve(JSON.stringify({}));
 			})
 	})
 }

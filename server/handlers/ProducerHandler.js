@@ -16,8 +16,8 @@ const updateCurrPlaylist = (userID, listName, newData) => {
 			resolve("Playlist updated successfully"); // Note: this message will not show up in terminal
 		})
 		.catch(err => {
-			// console.error("Error updating playlists", err);
-			reject(new Error(`Error updating playlists \n	${err}`));
+			console.error("Error updating playlists: \n", err);
+			resolve();
 		});
     });
 }
@@ -28,8 +28,8 @@ const renameCurrPlaylist = (userID, oldName, newName) => {
 		User.findById(userID)
 			.then(user => {
 				if (!user) {
-					// console.error("User not found");
-					return reject(new Error("User not found"));
+					console.error("User not found");
+					resolve();
 				}
 				// update playlist names list
 				const index = user.playlists.names.indexOf(oldName);
@@ -51,8 +51,8 @@ const renameCurrPlaylist = (userID, oldName, newName) => {
 				resolve("Playlist renamed successfully"); // Note: this message will not show up in terminal
 			})
 			.catch(err => {
-				// console.error("Error updating playlists", err);
-				reject(new Error("Error renaming playlist"));
+				console.error("Error updating playlists: \n", err);
+				resolve();
 			});
 	});
 }
@@ -62,7 +62,7 @@ const createPlaylist = (userID, listName) => {
 	return new Promise((resolve, reject) => {
 		User.findById(userID)
 			.then(user => {
-				if (!user) return reject(new Error("User not found"));
+				if (!user) return console.error("User not found");
 
 				if (!user.playlists.names.includes(listName)) { // double check the playlist does not already exist in DB
 					user.currPlaylist = listName;
@@ -83,7 +83,8 @@ const createPlaylist = (userID, listName) => {
 				resolve("Playlist created successfuly");
 			})
 			.catch((err) => {
-				reject(new Error(`Error creating playlist: \n	${err}`,));
+				console.error("Error creating playlist: \n", err);
+				resolve();
 			})
 	})
 }
@@ -93,7 +94,7 @@ const deletePlaylist = (userID, listName) => {
 	return new Promise((resolve, reject) => {
 		User.findById(userID)
 			.then(user => {
-				if (!user) return reject(new Error("User not found"));
+				if (!user) return console.error("User not found");
 
 				// remove playlist
 				user.playlists.names = user.playlists.names.filter(name => name != listName);
@@ -108,8 +109,9 @@ const deletePlaylist = (userID, listName) => {
 			.then((savedUser) => {
 				resolve("Playlist deleted successfuly");
 			})
-			.catch(() => {
-				reject(new Error(`Error deleting playlist: \n${err}`))
+			.catch((err) => {
+				console.error('Error deleting playlist: \n', err);
+				resolve();
 			})
 	});
 }
