@@ -62,6 +62,25 @@
 				</select>
 				<%- include('../partials/songFilter'); %>
 			</form>
+
+			<% if (!dbConnected) { %>
+				<h2>Not Connected to a Database</h2>
+				<% if (isDemoMode) { %>
+					<h3>Viewing Demo Data</h3>
+					<a href="https://github.com/hoanlee0802/Radio-Station-432/blob/f1d5c1ff892d1f1dab670fd031049a31bead8a55/README.md" 
+						title="Check your project configuration, including the .env MONGO_URL, which should include the database password. Make sure you are accessing your database from a whitelisted device IP.">
+						(More Information)</a>
+				<% } %>
+				<style>
+					h2,
+					h3, a {
+						text-align: center;
+						display: block;
+						margin: 0 auto;
+					}
+				</style>
+			<% } %>			
+			
 			<ul>
 				<%- include('../partials/songDatabase') %>
 			</ul>

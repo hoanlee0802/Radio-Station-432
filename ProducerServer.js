@@ -1,3 +1,5 @@
+const { isConnected, isDemoMode } = require('./server/handlers/dataConnector.js');
+
 module.exports = function(app) {
 
 	const Song = require('./server/models/Song.js');
@@ -21,6 +23,8 @@ module.exports = function(app) {
 				songs: songLib,
 				playlists: [], //placeholder empty value will be updated later
 				overlay: showOverlay,
+				dbConnected: isConnected(),
+				isDemoMode: isDemoMode(),
 
 				userData: loadUser ? loadUser : {} // object will be placed in EJS page in <script> to be referenced by client (easier than fetch etc.)
 			});
@@ -33,7 +37,7 @@ module.exports = function(app) {
 		if (req.cookies.viewingDJ) // the cookie will only exist if the user opened a DJ view and hasn't logged out
 			res.redirect(`/producer/${req.cookies.viewingDJ}`); // take user back to their last viewed DJ instead of select DJ landing page
 		else
-			renderProd(req, res, true); // true shows DJ selection overlay
+			renderProd(req, res, isConnected()); // the DJ selection overlay will be default shown if the database server is connected
 
 	});
 

@@ -240,3 +240,8 @@ app.use(function (req, res, next) {
 const port = process.env.PORT;
 app.listen(port);
 console.log("\nServer is listening on port= " + port);
+console.log(`\n\t>> Access localhost:${port} to view the web app.`)
+
+const { default: open } = require("open");
+if (process.env.NODE_ENV !== 'production')
+    open(`http://localhost:${port}`);
