@@ -1,23 +1,19 @@
+import { _el } from '../../global.js';
 import * as dj from './playlist-data.js';
 import { updatePlaylists, songsUI } from './playlist-events.js';
 import { setSessionData } from './select-dj.js';
 
-function $(selector) {
-	return document.querySelector(selector);
-}
-
 document.addEventListener('DOMContentLoaded', function() {
-	const songLists = $("section ul");
-	const songList1 = $("section.left ul");
-	const songList2 = $("section.right ul");
+	const songList1 = _el("section.left ul");
+	const songList2 = _el("section.right ul");
 
 	/* Adds song to the second list */
 	function addSong(ref) {
-		$('.playlist-info').style.display = 'none';
+		_el('.playlist-info').style.display = 'none';
 		if (!ref.classList.contains('added')) {
 			if (dj.currDJ.currPlaylist == undefined) {
 				dj.createPlaylist();
-				updatePlaylists();
+				updatePlaylists(true);
 				songsUI();
 			}
 
@@ -25,10 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
 			songCopy.innerHTML = ref.innerHTML;
 			
 			songCopy.querySelector('i').textContent = ''; // ensure pause button is not duplicated
-			songCopy.querySelector('.right').textContent = ''; // 2change add_circle to cancel
+			songCopy.querySelector('.right').textContent = ''; // ensure add_circle is not duplicated
 
 			// before adding text content of list element, empty the list element except for main song text
-			dj.appendSong(songCopy.getAttribute('data-id'), songCopy.textContent);
+			dj.pushSong(songCopy.getAttribute('data-id'), songCopy.textContent.trim()); // .trim() removes invisible whitespace characters
 
 			songCopy.querySelector('i').textContent = 'play_arrow'; // ensure pause button is not duplicated
 			songCopy.querySelector('.right').textContent = 'cancel'; // change add_circle to cancel
@@ -43,9 +39,14 @@ document.addEventListener('DOMContentLoaded', function() {
 	/* Removes song from the second list */
 	function removeSong(ref) {
 		const id = ref.getAttribute('data-id');
+
+		dj.removeSong(id);
+
 		const addedEle = songList1.querySelector(`li[data-id="${id}"]`);
 		addedEle.classList.remove('added');
 		ref.remove();
+
+		setSessionData();
 	}
 
 	function action(ele, icon) {

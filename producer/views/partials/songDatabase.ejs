@@ -1,0 +1,7 @@
+<% songs.forEach(function(song, index) { %>
+	<li class="song" data-id=<%= song["_id"] ? song["_id"] : index %>>
+		<i class="material-symbols-outlined thin-outline">play_arrow</i>
+		"<%= song.name %>" by <%= song.artist %>
+		<i class="material-symbols-outlined right">add_circle</i>
+	</li>
+<% }); %>

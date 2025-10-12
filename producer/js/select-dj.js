@@ -1,42 +1,37 @@
+import { _el } from '../../global.js';
 import * as dj from './playlist-data.js';
-import * as profiles from './user-profile.js';
-import { DJProfile } from './user-profile.js';
+
 import { updatePlaylists, songsUI } from './playlist-events.js';
 
-function $(selector) {
-	return document.querySelector(selector);
+function listDJs() {
+	_el('#selectDJ').classList.toggle('hide');
 }
 
-function listDJs() {
-	$('#selectDJ').classList.toggle('hide');
-}
+let currID; // this will store the current ID, which is also stored in the browser URL
 
 let find;
 
-function getSessionData(name) {
-	find = profiles.all.find(obj => obj.name == name);
-	if (find) {
-		dj.currDJ.currPlaylist = find.getOnPlaylist();
-		dj.currDJ.playlist = find.getPlaylists();
-	} else {
-		const profile = new DJProfile(name, {names: [], data: {}}, undefined);
-		find = profile;
-		
-		profiles.all.push(profile);
+async function getSessionData(name) {
+	let user = window.userData;
+	dj.currDJ.id = user['_id'];
 
-		dj.currDJ.currPlaylist = undefined;
-		dj.currDJ.playlist = {names: [], data: {}};
-	}
+	dj.currDJ.name = user.name;
+	dj.currDJ.currPlaylist = user.currPlaylist;
 
-	dj.currDJ.name = name;
-	updatePlaylists(dj.currDJ.currPlaylist); // providing name parameter looks for match
+	// Ensure data is initialized (in case of anomolous database values like null or undefined):
+	dj.currDJ.playlists.names = user.playlists.names || [];
+	dj.currDJ.playlists.data = user.playlists.data || {};
+
+	console.log(dj.currDJ);
+
+	updatePlaylists(dj.currDJ.currPlaylist);
 	songsUI();
 }
 
 function setSessionData() {
 	if (find) {
 		find.setOnPlaylist(dj.currDJ.currPlaylist);
-		find.setPlaylists(dj.currDJ.playlist);
+		find.setPlaylists(dj.currDJ.playlists);
 	}
 	
 	songsUI();
@@ -44,27 +39,36 @@ function setSessionData() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-	const confirmBtn = $('#selectDJ form');
-	const listDJ = $('header span.right');
+	getSessionData(); // Will work fine whether or not there is a user ID in the URL
 
-	const selectDJ = $('#selectDJ select.dj')
-	const timeslot = $('#selectDJ select.timeslot');
+
+	const confirmBtn = _el('#selectDJ form');
+	const listDJ = _el('header span.right');
+
+	const selectDJ = _el('#selectDJ select.dj')
+	const timeslot = _el('#selectDJ select.timeslot');
+
+	let selected;
 
 	selectDJ.addEventListener('change', function() {
 		if (selectDJ.value != "") {
 			timeslot.removeAttribute('disabled');
+			selected = selectDJ.options[selectDJ.selectedIndex];
+			
 		} else {
 			timeslot.setAttribute('disabled', '');
 			timeslot.value = "";
 		}
+
+
 	})
 
 
 	confirmBtn.addEventListener('submit', function(e) {
 		e.preventDefault();
-		getSessionData(selectDJ.options[selectDJ.selectedIndex].text);
+		currID = selected.getAttribute('data-id');
 
-		listDJs(); // this will hide the DJ list
+		window.location.pathname = `/producer/${currID}`;
 	});
 	
 	listDJ.addEventListener('click', function() {

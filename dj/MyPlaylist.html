@@ -3,8 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DJ - My Playlist</title>
+    <title>DJ - My Playlist (9:00-11:00)</title>
     <link rel="stylesheet" href="css/dj.css">
 
     <!-- CSS IMPORTS -->
@@ -19,24 +18,26 @@
     <!-- Google Material ICONS -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+
+    <!-- Include your JavaScript file -->
+    <script src="js/dj.js" type="module"></script>
 </head>
 
-<body></body>
-<div class="container">
-    <header>
-        <h1>RADIO STATION</h1>
-        <nav class="nav-buttons">
-            <button>Manager</button>
-            <button>Producer</button>
-            <button class="active">DJ</button>
-        </nav>
-    </header>
+<body>
+    <div class="container">
+        <header>
+            <h1>RADIO STATION</h1>
+            <nav class="nav-buttons">
+                <button onclick="location.href='../manager/ManagerHome.html'">Manager</button>
+                <button onclick="location.href='/producer'">Producer</button>
+                <button class="active" onclick="location.href='DJHome.html'">DJ</button>
+            </nav>
+        </header>
 
-    <div class="main-content">
-        <main>
-            <div class="playlist">
-                <h2>Current Playlist</h2>
-                <table>
+        <div class="main-content">
+            <main>
+                <h2>My Playlist (9:00-11:00)</h2>
+                <table id="myPlaylistTable">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -46,141 +47,56 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Song 1</td>
-                            <td>Artist 1</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Song 2</td>
-                            <td>Artist 2</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Song 3</td>
-                            <td>Artist 3</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Song 4</td>
-                            <td>Artist 4</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Song 5</td>
-                            <td>Artist 5</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Song 6</td>
-                            <td>Artist 6</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>Song 7</td>
-                            <td>Artist 7</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td>Song 8</td>
-                            <td>Artist 8</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>Song 9</td>
-                            <td>Artist 9</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>Song 10</td>
-                            <td>Artist 10</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>11</td>
-                            <td>Song 11</td>
-                            <td>Artist 11</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>12</td>
-                            <td>Song 12</td>
-                            <td>Artist 12</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr></tr>
-                        <td>13</td>
-                        <td>Song 13</td>
-                        <td>Artist 13</td>
-                        <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>14</td>
-                            <td>Song 14</td>
-                            <td>Artist 14</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>15</td>
-                            <td>Song 15</td>
-                            <td>Artist 15</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>16</td>
-                            <td>Song 16</td>
-                            <td>Artist 16</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>17</td>
-                            <td>Song 17</td>
-                            <td>Artist 17</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>18</td>
-                            <td>Song 18</td>
-                            <td>Artist 18</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>19</td>
-                            <td>Song 19</td>
-                            <td>Artist 19</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
-                        <tr>
-                            <td>20</td>
-                            <td>Song 20</td>
-                            <td>Artist 20</td>
-                            <td><button class="delete-btn">🗑️</button></td>
-                        </tr>
+                        <!-- Playlist for 9:00-11:00 time slot will be populated here -->
                     </tbody>
                 </table>
-            </div>
-            <div class="player">
-                <button class="play-btn">▶️</button>
-                <p>Playing Song AAA By Artist BBB</p>
-            </div>
-
-            <div class="back-button">
-                <button onclick="window.location.href='AssignedPlaylist.html'">Back to Assigned Playlist</button>
-            </div>
-
-        </main>
+            </main>
+        </div>
     </div>
-</div>
+
+    <!-- Script to fetch and display the playlist -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tableBody = document.querySelector('#myPlaylistTable tbody');
+            const timeSlot = '9:00-11:00';
+
+            // Example playlist data
+            const playlistData = [
+                { title: 'Song Title 1', artist: 'Artist 1', timeSlot: '9:00-11:00' },
+                { title: 'Song Title 2', artist: 'Artist 2', timeSlot: '9:00-11:00' },
+                { title: 'Song Title 3', artist: 'Artist 3', timeSlot: '11:00-13:00' },
+                // Add more song objects as needed
+            ];
+
+            // Filter songs for the 9:00-11:00 time slot
+            const filteredSongs = playlistData.filter(song => song.timeSlot === timeSlot);
+
+            // Populate the table with filtered songs
+            filteredSongs.forEach((song, index) => {
+                const row = document.createElement('tr');
+
+                const cellIndex = document.createElement('td');
+                cellIndex.textContent = index + 1;
+                row.appendChild(cellIndex);
+
+                const cellSong = document.createElement('td');
+                cellSong.textContent = song.title;
+                row.appendChild(cellSong);
+
+                const cellArtist = document.createElement('td');
+                cellArtist.textContent = song.artist;
+                row.appendChild(cellArtist);
+
+                const cellAction = document.createElement('td');
+                const playButton = document.createElement('button');
+                playButton.textContent = 'Play';
+                cellAction.appendChild(playButton);
+                row.appendChild(cellAction);
+
+                tableBody.appendChild(row);
+            });
+        });
+    </script>
 </body>
 
 </html>

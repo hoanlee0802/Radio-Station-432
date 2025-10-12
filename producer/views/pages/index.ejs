@@ -1,0 +1,125 @@
+<html lang="en">
+
+<head>
+	<%- include('../partials/head'); %>
+
+	<style>
+		/* Great Flex Reference: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+		ul {
+			display: flex;
+			flex-wrap: wrap;
+		}
+	
+		ul li {
+			flex-basis: 400px;
+			/* The size each element must be before space distribution */
+			flex-grow: 1;
+			/* The items take up even space */
+		}
+	</style>
+	<script>
+		/* JSON stringify required when assigning database values with JavaScript */
+		window.userData = <%- JSON.stringify(userData) %>;
+
+
+		function showSidebar() {
+			const sidebar = document.querySelector('#sidebar');
+			sidebar.classList.toggle('show');
+		}
+		</script>
+</head>
+
+<body>
+	<%- include('../partials/header') %>
+	<div id="selectDJ" class=" <%if(!overlay){%> hide <%}%> ">
+		<%- include('../partials/selectDJ'); %>
+	</div>
+	<aside id="sidebar">
+		<!-- Clicking the profile image takes the user directly to the home page without any cookie-clearing logout procedure -->
+		<div class="profile" onclick="window.location = '/'">
+			<img src="../profile-pic.png" alt="Profile Picture">
+			<p>User1</p>
+		</div>
+		<nav>
+			<ul>
+				<li><a href="#">Feature 1</a></li>
+				<li><a href="#">Feature 2</a></li>
+				<li><a href="#">Feature 3</a></li>
+			</ul>
+		</nav>
+		<button class="signout" onclick="window.location.pathname = '/producer/logout'">Sign out</button>
+	</aside>
+	<main>
+		<section class="left">
+			<form>
+				<h3>SONG DATABASE</h3>
+				<select class="large">
+					<option value="">Sort By</option>
+					<option>Name</option>
+					<option>Length</option>
+					<option>Creation Date</option>
+					<option>Popularity</option>
+				</select>
+				<%- include('../partials/songFilter'); %>
+			</form>
+
+			<% if (!dbConnected) { %>
+				<h2>Not Connected to a Database</h2>
+				<% if (isDemoMode) { %>
+					<h3>Viewing Demo Data</h3>
+					<a href="https://github.com/hoanlee0802/Radio-Station-432/blob/f1d5c1ff892d1f1dab670fd031049a31bead8a55/README.md" 
+						title="Check your project configuration, including the .env MONGO_URL, which should include the database password. Make sure you are accessing your database from a whitelisted device IP.">
+						(More Information)</a>
+				<% } %>
+				<style>
+					h2,
+					h3, a {
+						text-align: center;
+						display: block;
+						margin: 0 auto;
+					}
+				</style>
+			<% } %>			
+			
+			<ul>
+				<%- include('../partials/songDatabase') %>
+			</ul>
+
+			<div class="requests">
+				SONG REQUESTS
+			</div>
+		</section>
+		<section class="right">
+			<form>
+				<h3>YOUR PLAYLISTS</h3>
+				<select class="playlist large" required>
+					<option value="select">Select Playlist</option>
+					<!-- Process Array of Playlist Names -->
+					<% playlists.forEach(function(playlist) { %>
+						<option>playlist</option> 
+					<% }); %>
+					<option value="create">--+ Create New +--</option>
+				</select>
+				<%- include('../partials/songFilter'); %>
+			</form>
+			<aside>
+				<span class="playlist-info">
+					<span style="display: block;">Add Songs to Auto-Create a Playlist</span>
+					<caption style="display: block;">(try double clicking a song)</caption>
+				</span>
+				
+			</aside>
+			<ul>
+
+			</ul>
+			<table class="disabled">
+				<tr class="Days">
+					<td><button class="delete">Delete Playlist</button></td>
+					<td><button class="rename">Rename Playlist</button></td>
+				</tr>
+			</table>
+		</section>
+	</main>
+</body>
+
+</html>

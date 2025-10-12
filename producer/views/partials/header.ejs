@@ -1,0 +1,16 @@
+<header>
+	<span class="left" onclick="showSidebar()">
+		<i class="material-icons">person</i>
+	</span>
+
+	PRODUCER 
+	<% if (userData.name) { %>
+		<i>
+			for
+			<%= userData.name %>
+		</i>
+	<% } %>
+	<span class="right">
+		<i class="material-symbols-outlined">album</i>
+	</span>
+</header>
