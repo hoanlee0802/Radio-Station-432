@@ -1,3 +1,9 @@
+**Note and Disclaimer**: This is a **Demo** application, not reflective of a production-level project. Normally the `.env` file is excluded from commits, but this repository is intended to serve as a more comprehensive illustration for a project behind the scenes.
+
+In real applications (i.e. open source projects on GitHub), the database URL and .env file is not publicly accessible and therefore excluded from commits. Such real applications may rely on the developer setting up their own database for an open source project, or other team projects may rely on each member having individual access to API/database keys. Failing to follow these precautions for production-level applications can lead to the database being exploited or covertly used for unintended schemes, and is especially risky for production database accounts.
+
+Demo databases for demo projects should be hosted on completely free-tier account that is not connected to any sensitive information. And, that account should be used exclusively for demo projects.
+
 # Radio-Station-432
 
 To run the application, use the terminal to execute `npm run start` or `node server.js`. The database will not automatically work unless the demo database is up or you provide your own database link as detailed below.
